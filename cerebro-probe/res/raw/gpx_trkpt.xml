@@ -1,0 +1,9 @@
+      <trkpt lat="%f" lon="%f">
+        <time>%s</time>
+        <ele>%f</ele>
+        <speed>%f</speed>
+        <course>%f</course>
+        <hdop>%f</hdop>
+        <sat>%d</sat>
+        <src>%s</src>
+      </trkpt>

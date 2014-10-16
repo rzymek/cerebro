@@ -1,0 +1,2 @@
+* Włączaj GPS tylko na komunikat PREPARE oraz przy wzbudzeniu ekranu.
+* include basic device information in GPX report
