@@ -1,4 +1,4 @@
-package org.mortar.common.msg;
+package cerebro.lib.msg;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

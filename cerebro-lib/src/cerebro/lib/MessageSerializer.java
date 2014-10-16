@@ -1,4 +1,4 @@
-package org.mortar.common;
+package cerebro.lib;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.mortar.common.msg.MortarMessage;
+import cerebro.lib.msg.MortarMessage;
 
 public class MessageSerializer {
 	private String pkg;

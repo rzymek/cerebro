@@ -3,7 +3,7 @@
  *
  * (c) Copyright IBM Corp. 2007
  */
-package org.mortar.common;
+package cerebro.lib;
 
 import java.util.Hashtable;
 import java.util.Map;

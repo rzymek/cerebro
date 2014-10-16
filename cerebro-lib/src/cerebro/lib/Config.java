@@ -1,4 +1,4 @@
-package org.mortar.common;
+package cerebro.lib;
 
 import android.content.Context;
 import android.content.SharedPreferences;

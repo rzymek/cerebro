@@ -1,4 +1,4 @@
-package org.mortar.common;
+package cerebro.lib;
 
 import android.location.GpsSatellite;
 import android.location.GpsStatus;

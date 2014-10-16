@@ -1,4 +1,4 @@
-package org.mortar.common.msg;
+package cerebro.lib.msg;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.mortar.common.Config;
+import cerebro.lib.Config;
 
 import android.content.Context;
 

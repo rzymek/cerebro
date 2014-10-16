@@ -1,4 +1,4 @@
-package org.mortar.common.data;
+package cerebro.lib.data;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
