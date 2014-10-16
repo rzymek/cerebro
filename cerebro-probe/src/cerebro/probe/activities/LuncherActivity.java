@@ -1,17 +1,15 @@
 package cerebro.probe.activities;
 
-import org.mortar.common.Utils;
-
-import cerebro.probe.App;
-import cerebro.probe.R;
-import cerebro.probe.services.GPSListenerService;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import cerebro.lib.Utils;
+import cerebro.probe.App;
+import cerebro.probe.R;
+import cerebro.probe.services.GPSListenerService;
 
 public class LuncherActivity extends Activity {
 	public static final String EXTRA_EXIT = "exit";

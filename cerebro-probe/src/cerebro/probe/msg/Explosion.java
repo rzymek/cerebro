@@ -1,10 +1,9 @@
 package cerebro.probe.msg;
 
+import android.content.Context;
 import cerebro.probe.App;
 
-import android.content.Context;
-
-public class Explosion extends org.mortar.common.msg.Explosion implements ReceivedMessage {
+public class Explosion extends cerebro.lib.msg.Explosion implements ReceivedMessage {
 	@Override
 	public void onReceive(Context context) {
 		App app = (App) context.getApplicationContext();

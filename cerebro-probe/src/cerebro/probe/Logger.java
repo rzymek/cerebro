@@ -2,9 +2,6 @@ package cerebro.probe;
 
 import java.util.Date;
 
-import org.mortar.common.CoordinateConversion;
-import org.mortar.common.CoordinateConversion.UTM;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Location;
 import android.util.Log;
+import cerebro.lib.CoordinateConversion;
+import cerebro.lib.CoordinateConversion.UTM;
 
 public class Logger extends SQLiteOpenHelper {
 	private static final long MIN_INTERVAL = 5/* sec */* 1000L;

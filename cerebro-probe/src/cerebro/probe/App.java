@@ -2,22 +2,15 @@ package cerebro.probe;
 
 import java.util.Date;
 
-import org.mortar.common.Utils;
-import org.mortar.common.msg.Explosion;
-
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
-
-import cerebro.probe.R;
+import cerebro.lib.Utils;
 import cerebro.probe.activities.InfoActivity;
-import cerebro.probe.activities.ViewLogActivity;
+import cerebro.probe.msg.Explosion;
 import cerebro.probe.services.GPSListenerService;
 
-import com.parse.Parse;
-import com.parse.PushService;
-
-public class App extends org.mortar.common.App {
+public class App extends cerebro.lib.App {
 	private static final long CURRENT_LOCATION_TIMEOUT = 7 * 60 * 1000;
 	private static final int HIGH_ALERT_ON_EXPLOSION_SEC = 3 * 60;
 

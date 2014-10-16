@@ -6,19 +6,6 @@ import static android.location.LocationManager.PASSIVE_PROVIDER;
 
 import java.util.Date;
 
-import org.mortar.common.AbstractLocationListener;
-import org.mortar.common.CoordinateConversion;
-import org.mortar.common.CoordinateConversion.UTM;
-import org.mortar.common.SateliteListener;
-import org.mortar.common.Utils;
-
-import cerebro.probe.App;
-import cerebro.probe.Logger;
-import cerebro.probe.R;
-import cerebro.probe.activities.LuncherActivity;
-import cerebro.probe.activities.ViewLogActivity;
-import cerebro.probe.utils.GPSUtils;
-
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -37,6 +24,17 @@ import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import cerebro.lib.AbstractLocationListener;
+import cerebro.lib.CoordinateConversion;
+import cerebro.lib.CoordinateConversion.UTM;
+import cerebro.lib.SateliteListener;
+import cerebro.lib.Utils;
+import cerebro.probe.App;
+import cerebro.probe.Logger;
+import cerebro.probe.R;
+import cerebro.probe.activities.LuncherActivity;
+import cerebro.probe.activities.ViewLogActivity;
+import cerebro.probe.utils.GPSUtils;
 
 public class GPSListenerService extends Service {
 	private static enum State {

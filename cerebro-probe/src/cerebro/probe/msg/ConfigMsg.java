@@ -1,16 +1,14 @@
 package cerebro.probe.msg;
 
-import org.mortar.common.Config;
-import org.mortar.common.Utils;
-
-import cerebro.probe.App;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import cerebro.lib.Config;
+import cerebro.lib.Utils;
+import cerebro.probe.App;
 
-public class ConfigMsg extends org.mortar.common.msg.ConfigMsg implements ReceivedMessage {
+public class ConfigMsg extends cerebro.lib.msg.ConfigMsg implements ReceivedMessage {
 
 	@Override
 	public void onReceive(Context context) {

@@ -1,8 +1,5 @@
 package cerebro.probe.activities;
 
-import cerebro.probe.App;
-import cerebro.probe.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -12,6 +9,8 @@ import android.os.Vibrator;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import cerebro.probe.App;
+import cerebro.probe.R;
 
 public class InfoActivity extends Activity {
 
