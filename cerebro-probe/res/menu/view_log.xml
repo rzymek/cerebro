@@ -22,6 +22,12 @@
         android:title="@string/export"
         app:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_report"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:orderInCategory="120"
+        android:title="@string/report_location"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_reset"
         android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="130"

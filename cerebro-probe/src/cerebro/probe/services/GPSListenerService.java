@@ -44,7 +44,7 @@ public class GPSListenerService extends Service {
 	private boolean isScreenOn = false;
 	private State currentState = State.LOW_ALERT;
 
-	private static final int NOTIFIFACTION_ID = 81263183;
+	private static final int NOTIFIFACTION_ID = 8126318;
 	private static final int STOP_HIGH_ALERT = 100;
 
 	public static final String EXTRA_HIGH_ALERT = "high alert (sec)";
@@ -151,8 +151,6 @@ public class GPSListenerService extends Service {
 			}
 		}
 	};
-	private CharSequence notificationTitle = "Mortar";
-	private CharSequence notificationText = "";
 
 	// ========================================================================================================
 
@@ -190,22 +188,18 @@ public class GPSListenerService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		logger.log("start command");
 		int forceActive = intent.getIntExtra(EXTRA_HIGH_ALERT, -1);
-		if (forceActive > 0) {
+		if (forceActive >= 0) {
 			request(State.HIGH_ALERT);
 			handler.removeMessages(STOP_HIGH_ALERT);
-			handler.sendMessageDelayed(handler.obtainMessage(STOP_HIGH_ALERT), forceActive * 1000L);
+			if(forceActive > 0) {
+				handler.sendMessageDelayed(handler.obtainMessage(STOP_HIGH_ALERT), forceActive * 1000L);
+			}
 		}
 		startForeground(NOTIFIFACTION_ID, createNotification(null, null));
 		return START_NOT_STICKY;
 	}
 
 	private Notification createNotification(CharSequence title, CharSequence msg) {
-		if (title != null) {
-			notificationTitle = title;
-		}
-		if (msg != null) {
-			notificationText = msg;
-		}
 		Intent resultIntent = new Intent(this, ViewLogActivity.class);
 		resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -224,9 +218,9 @@ public class GPSListenerService extends Service {
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 		builder.setContentIntent(resultPendingIntent);
 		builder.setSmallIcon(R.drawable.ic_launcher);
-		builder.setContentTitle(this.notificationTitle);
-		if (VERBOSE) {
-			builder.setContentText(this.notificationText);
+		builder.setContentTitle(getString(R.string.app_name));
+		if (msg != null) {
+			builder.setContentText(msg);
 		}
 
 		Notification notification = builder.build();

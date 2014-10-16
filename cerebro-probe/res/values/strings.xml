@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Mortar Sensor</string>
+    <string name="app_name">Cerebro Probe</string>
     <string name="title_activity_info">Mortar Hit</string>
     <string name="title_activity_view_log">Mortal Log</string>
     <string name="reset">Reset</string>
     <string name="refresh">Refresh</string>
     <string name="export">Export</string>
+    <string name="report_location">Report Location</string>
     <string name="epicenter">Epicentrum</string>
     <string name="shutdown">Shutdown</string>
     <string name="app_started">Mortar started</string>

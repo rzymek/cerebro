@@ -22,7 +22,7 @@ public class LuncherActivity extends Activity {
 		Intent intent = getIntent();
 		if (intent.getBooleanExtra(EXTRA_EXIT, false)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Mortar");
+			builder.setTitle(R.string.app_name);
 			builder.setMessage("Exit?");
 			builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 				@Override

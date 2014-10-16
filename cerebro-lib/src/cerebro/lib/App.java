@@ -16,7 +16,7 @@ public class App extends Application implements UncaughtExceptionHandler {
 		super.onCreate();
 		config = new Config.Read(this);
 
-		Parse.initialize(this, "zh0WoCJmlUEZcyUcfcfJxsV0LzlWogRxT9eskueX", "sUr8eVDrVmKbf3vgkfBQ15O6eRPfT2nPGnekLVP2");
+		Parse.initialize(this, "GFkfk3rwmiBmuXWrA39xq8h7Phvc9ThUSLGc97c5", "OkWz5Pm0z6xOwLn2ZnanYGueAId8syU1fFcaA6ys");
 		setupParse();
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}

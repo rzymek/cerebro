@@ -94,6 +94,11 @@ public class ViewLogActivity extends ActionBarActivity {
 		case R.id.action_refresh:
 			onResume();
 			break;
+		case R.id.action_report:
+			Intent prepare = new Intent(this, GPSListenerService.class);
+			prepare.putExtra(GPSListenerService.EXTRA_HIGH_ALERT, 0);
+			startService(prepare);
+			break;
 		case R.id.action_export:
 			export();
 			break;
