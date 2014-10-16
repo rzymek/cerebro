@@ -1,16 +1,18 @@
-package org.mortar.sensor;
+package cerebro.probe;
 
 import java.util.Date;
 
 import org.mortar.common.Utils;
 import org.mortar.common.msg.Explosion;
-import org.mortar.sensor.activities.InfoActivity;
-import org.mortar.sensor.activities.ViewLogActivity;
-import org.mortar.sensor.services.GPSListenerService;
 
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
+
+import cerebro.probe.R;
+import cerebro.probe.activities.InfoActivity;
+import cerebro.probe.activities.ViewLogActivity;
+import cerebro.probe.services.GPSListenerService;
 
 import com.parse.Parse;
 import com.parse.PushService;

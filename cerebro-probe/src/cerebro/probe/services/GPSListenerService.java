@@ -1,4 +1,4 @@
-package org.mortar.sensor.services;
+package cerebro.probe.services;
 
 import static android.location.LocationManager.GPS_PROVIDER;
 import static android.location.LocationManager.NETWORK_PROVIDER;
@@ -11,12 +11,13 @@ import org.mortar.common.CoordinateConversion;
 import org.mortar.common.CoordinateConversion.UTM;
 import org.mortar.common.SateliteListener;
 import org.mortar.common.Utils;
-import org.mortar.sensor.App;
-import org.mortar.sensor.Logger;
-import org.mortar.sensor.R;
-import org.mortar.sensor.activities.LuncherActivity;
-import org.mortar.sensor.activities.ViewLogActivity;
-import org.mortar.sensor.utils.GPSUtils;
+
+import cerebro.probe.App;
+import cerebro.probe.Logger;
+import cerebro.probe.R;
+import cerebro.probe.activities.LuncherActivity;
+import cerebro.probe.activities.ViewLogActivity;
+import cerebro.probe.utils.GPSUtils;
 
 import android.app.Notification;
 import android.app.PendingIntent;

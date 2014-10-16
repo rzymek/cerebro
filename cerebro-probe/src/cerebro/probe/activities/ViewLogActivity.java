@@ -1,4 +1,4 @@
-package org.mortar.sensor.activities;
+package cerebro.probe.activities;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,10 +14,11 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.mortar.common.Utils;
-import org.mortar.sensor.App;
-import org.mortar.sensor.Logger;
-import org.mortar.sensor.R;
-import org.mortar.sensor.services.GPSListenerService;
+
+import cerebro.probe.App;
+import cerebro.probe.Logger;
+import cerebro.probe.R;
+import cerebro.probe.services.GPSListenerService;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

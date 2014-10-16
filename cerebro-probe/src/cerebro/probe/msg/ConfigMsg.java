@@ -1,8 +1,9 @@
-package org.mortar.sensor.msg;
+package cerebro.probe.msg;
 
 import org.mortar.common.Config;
 import org.mortar.common.Utils;
-import org.mortar.sensor.App;
+
+import cerebro.probe.App;
 
 import android.content.Context;
 import android.content.SharedPreferences;

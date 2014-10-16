@@ -1,6 +1,6 @@
-package org.mortar.sensor.msg;
+package cerebro.probe.msg;
 
-import org.mortar.sensor.services.GPSListenerService;
+import cerebro.probe.services.GPSListenerService;
 
 import android.content.Context;
 import android.content.Intent;

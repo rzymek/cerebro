@@ -1,9 +1,10 @@
-package org.mortar.sensor.activities;
+package cerebro.probe.activities;
 
 import org.mortar.common.Utils;
-import org.mortar.sensor.App;
-import org.mortar.sensor.R;
-import org.mortar.sensor.services.GPSListenerService;
+
+import cerebro.probe.App;
+import cerebro.probe.R;
+import cerebro.probe.services.GPSListenerService;
 
 import android.app.Activity;
 import android.app.AlertDialog;

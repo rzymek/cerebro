@@ -1,4 +1,4 @@
-package org.mortar.sensor;
+package cerebro.probe;
 
 import java.util.Date;
 

@@ -1,7 +1,7 @@
-package org.mortar.sensor.activities;
+package cerebro.probe.activities;
 
-import org.mortar.sensor.App;
-import org.mortar.sensor.R;
+import cerebro.probe.App;
+import cerebro.probe.R;
 
 import android.app.Activity;
 import android.content.Intent;

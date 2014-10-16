@@ -1,6 +1,6 @@
-package org.mortar.sensor.msg;
+package cerebro.probe.msg;
 
-import org.mortar.sensor.App;
+import cerebro.probe.App;
 
 import android.content.Context;
 
