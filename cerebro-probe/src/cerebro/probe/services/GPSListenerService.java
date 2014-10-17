@@ -38,6 +38,8 @@ public class GPSListenerService extends Service {
 
 	public static final String EXTRA_REQUEST = "request";
 
+	protected static final float MIN_ACCURACY = 50;
+
 	private LocationManager gps;
 
 	private SateliteListener sateliteListener;
@@ -49,21 +51,32 @@ public class GPSListenerService extends Service {
 	private Activate request;
 	private DateTime started = new DateTime(0);
 	private DateTime lastReport = null;
-
-	private Location currentBestLocation;
+	private Location lastReportLocation;
 
 	private LocationListener gpsListener = new AbstractLocationListener() {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			if (GPSUtils.isBetterLocation(location, currentBestLocation)) {
-				currentBestLocation = location;
-				logger.put(location);
-				if (lastReport == null || lastReport.plusSeconds(request.checkIntervalSec).isBeforeNow()) {
+			boolean lastReportNotSufficientlyAccurate = lastReportLocation == null || lastReportLocation.getAccuracy() > MIN_ACCURACY;
+			if (GPSUtils.isBetterLocation(location, lastReportLocation)) {
+				boolean sufficientlyAccurate = location.getAccuracy() <= MIN_ACCURACY;
+				boolean moreAccurate = lastReportLocation == null || location.getAccuracy() > lastReportLocation.getAccuracy();
+				boolean timeForNewReport = lastReport == null || lastReport.plusSeconds(request.checkIntervalSec).isBeforeNow();
+				logger.log(
+					(lastReportNotSufficientlyAccurate?"lastReportNotSufficientlyAccurate ":"#")+
+					(sufficientlyAccurate?"sufficientlyAccurate ":"#")+
+					(moreAccurate?"moreAccurate ":"#")+
+					(timeForNewReport?"timeForNewReport ":"#")+
+					""
+				);
+				if (timeForNewReport || (lastReportNotSufficientlyAccurate && sufficientlyAccurate && moreAccurate)) {
 					reportLocation(location);
 				}
+				lastReportLocation = location;
+				logger.put(location);
+				lastReportNotSufficientlyAccurate = !sufficientlyAccurate;
 			}
-			if (lastReport != null && started.plusMinutes(request.gpsOnMinutes).isAfterNow()) {
+			if (!lastReportNotSufficientlyAccurate && lastReport != null && started.plusMinutes(request.gpsOnMinutes).isBeforeNow()) {
 				stopGps();
 			}
 		}
@@ -87,16 +100,16 @@ public class GPSListenerService extends Service {
 	}
 
 	protected void reportLocation(Location location) {
-		logger.log("reporting location");
+		logger.log("reporting location: acc:" + location.getAccuracy());
+		lastReport = new DateTime();
 
 		ParseObject report = new ParseObject("locrep");
 		report.put("lat", location.getLatitude());
 		report.put("lon", location.getLongitude());
+		report.put("acc", location.getAccuracy());
 		report.put("time", new Date(location.getTime()));
 		report.put("device", getDeviceId(this));
 		report.saveInBackground();
-
-		lastReport = new DateTime();
 	}
 
 	private static String getDeviceId(Context context) {

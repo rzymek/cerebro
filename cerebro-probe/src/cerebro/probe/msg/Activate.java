@@ -7,8 +7,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Activate implements Parcelable, ReceivedMessage {
-	public int gpsOnMinutes = 0;
-	public int checkIntervalSec = 0;
+	public int gpsOnMinutes = -1;
+	public int checkIntervalSec = Integer.MAX_VALUE;
+
+	@Override
+	public void onReceive(Context ctx) {
+		Intent intent = new Intent(ctx, GPSListenerService.class);
+		intent.putExtra(GPSListenerService.EXTRA_REQUEST, this);
+		ctx.startService(intent);
+	}
+
+	public static final Parcelable.Creator<Activate> CREATOR = new Parcelable.Creator<Activate>() {
+		public Activate createFromParcel(Parcel in) {
+			Activate activate = new Activate();
+			activate.gpsOnMinutes = in.readInt();
+			activate.checkIntervalSec = in.readInt();
+			return activate;
+		}
+
+		public Activate[] newArray(int size) {
+			return new Activate[size];
+		}
+	};
 
 	@Override
 	public int describeContents() {
@@ -21,10 +41,4 @@ public class Activate implements Parcelable, ReceivedMessage {
 		dest.writeInt(checkIntervalSec);
 	}
 
-	@Override
-	public void onReceive(Context ctx) {
-		Intent intent = new Intent(ctx, GPSListenerService.class);
-		intent.putExtra(GPSListenerService.EXTRA_REQUEST, this);
-		ctx.startService(intent);
-	}
 }
