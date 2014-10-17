@@ -1,17 +1,12 @@
 package cerebro.probe.msg;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
-import cerebro.lib.Config;
-import cerebro.lib.Utils;
-import cerebro.probe.App;
 
-public class ConfigMsg extends cerebro.lib.msg.ConfigMsg implements ReceivedMessage {
+public class ConfigMsg implements ReceivedMessage {
 
 	@Override
 	public void onReceive(Context context) {
+		/*
 		try {
 			SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
 			Editor edit = shared.edit();
@@ -32,6 +27,6 @@ public class ConfigMsg extends cerebro.lib.msg.ConfigMsg implements ReceivedMess
 		} catch (Exception ex) {
 			Utils.handle(ex, context);
 		}
-
+		*/
 	}
 }

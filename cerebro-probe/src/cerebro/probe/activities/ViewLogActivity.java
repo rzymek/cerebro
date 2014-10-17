@@ -32,6 +32,7 @@ import cerebro.lib.Utils;
 import cerebro.probe.App;
 import cerebro.probe.Logger;
 import cerebro.probe.R;
+import cerebro.probe.msg.Activate;
 import cerebro.probe.services.GPSListenerService;
 
 import com.parse.ParseObject;
@@ -96,7 +97,7 @@ public class ViewLogActivity extends ActionBarActivity {
 			break;
 		case R.id.action_report:
 			Intent prepare = new Intent(this, GPSListenerService.class);
-			prepare.putExtra(GPSListenerService.EXTRA_HIGH_ALERT, 0);
+			prepare.putExtra(GPSListenerService.EXTRA_REQUEST, new Activate());
 			startService(prepare);
 			break;
 		case R.id.action_export:
