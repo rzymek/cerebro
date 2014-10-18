@@ -54,7 +54,7 @@
             android:label="@string/title_activity_view_log" >
         </activity>
         <receiver
-            android:name=".services.SMSReceiver"
+            android:name=".services.RequestReceiver"
             android:exported="false" >
             <intent-filter>
                 <!-- can't be @string/action. must be inline -->
