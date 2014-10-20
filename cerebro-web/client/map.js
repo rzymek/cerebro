@@ -19,13 +19,16 @@ Template.map.rendered = function() {
             color: '#000'
         };
     }
+    function createPopup(probe){
+        return Blaze.toHTMLWithData(Template.popup, probe);
+    }
     markers = {};
     Probes.find().observeChanges({
         added: function(id, probe) {
             var marker = L.circleMarker(probe.location, createIcon(probe.color));
             marker.setRadius(10/*m*/);
             marker.addTo(map);
-            marker.bindPopup(probe.name);
+            marker.bindPopup(createPopup(probe));
             markers[id] = marker;
         },
         changed: function(id, probe) {
@@ -33,7 +36,7 @@ Template.map.rendered = function() {
             if (probe.location)
                 marker.setLatLng(probe.location);
             if (probe.name)
-                marker.setPopupContent(probe.name);
+                marker.setPopupContent(createPopup(probe));
             if (probe.color)
                 marker.setStyle(createIcon(probe.color))
         },

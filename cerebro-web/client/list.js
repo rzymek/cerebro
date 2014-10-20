@@ -5,6 +5,7 @@ Template.list.helpers({
 });
 Template.list.events({
     'click button': function(e) {
-        markers[e.target.name].openPopup();
+        var marker = markers[e.target.name];
+        marker.openPopup();
     }
 });
