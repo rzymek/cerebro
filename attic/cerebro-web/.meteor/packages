@@ -6,5 +6,12 @@
 meteor-platform
 autopublish
 insecure
-boustanihani:meteor-leaflet
+cfs:http-methods
+iron:router
+mizzao:bootstrap-3
+less
+mrt:moment
+aldeed:geocoder
+mrt:googlemaps
+andrasph:random-color
 
