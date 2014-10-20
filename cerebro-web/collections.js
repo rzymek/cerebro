@@ -1,4 +1,5 @@
 Probes = new Mongo.Collection('probes');
+Tracks = new Mongo.Collection('tracks');
 
 Probes.allow({
     insert: function(userId, probe) {
