@@ -12,7 +12,6 @@ Meteor.startup(function() {
             var imei = _.chain(fields).filter(function(it) {
                 return it.indexOf('imei:') === 0;
             }).first().value();
-            console.log(imei);
             registerReport({
                 lat: fixPos(fields[5]),
                 lon: fixPos(fields[7]),

@@ -1,5 +1,5 @@
 Template.map.rendered = function() {
-    var map = new L.Map('map');
+    map = new L.Map('map');
     L.Icon.Default.imagePath = 'packages/boustanihani_meteor-leaflet/images';
     var url = 'http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png'
 //    var url='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -19,8 +19,8 @@ Template.map.rendered = function() {
             color: '#000'
         };
     }
-    function createPopup(probe){
-        return Blaze.toHTMLWithData(Template.popup, probe);
+    function createPopup(id, probe) {
+        return Blaze.toHTMLWithData(Template.popup, _.extend(probe, {_id: id}));
     }
     markers = {};
     Probes.find().observeChanges({
@@ -28,7 +28,7 @@ Template.map.rendered = function() {
             var marker = L.circleMarker(probe.location, createIcon(probe.color));
             marker.setRadius(10/*m*/);
             marker.addTo(map);
-            marker.bindPopup(createPopup(probe));
+            marker.bindPopup(createPopup(id, probe));
             markers[id] = marker;
         },
         changed: function(id, probe) {
@@ -36,13 +36,15 @@ Template.map.rendered = function() {
             if (probe.location)
                 marker.setLatLng(probe.location);
             if (probe.name)
-                marker.setPopupContent(createPopup(probe));
+                marker.setPopupContent(createPopup(id, probe));
             if (probe.color)
-                marker.setStyle(createIcon(probe.color))
+                marker.setStyle(createIcon(probe.color));
         },
         removed: function(id) {
             var marker = markers[id];
             map.removeLayer(marker);
+            if (track)
+                map.removeLayer(track);
             delete markers[id];
         }
     });

@@ -9,8 +9,8 @@ registerReport = function(data) {
     });
     var probe = {
         location: {
-            lat: data.lat,
-            lon: data.lon
+            lat: Number(data.lat),
+            lon: Number(data.lon)
         },
         name: data.name,
         timestamp: new Date()
@@ -22,6 +22,7 @@ registerReport = function(data) {
             created: new Date()
         }
     });
+    probe.name = Probes.findOne({name: data.name})._id;
     Tracks.insert(probe);
 };
 
