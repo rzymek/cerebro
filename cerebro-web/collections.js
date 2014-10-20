@@ -1,0 +1,1 @@
+Probes = new Meteor.Collection('probes');
