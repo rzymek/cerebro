@@ -1,0 +1,1 @@
+net = Npm.require('net');

@@ -1,9 +1,14 @@
 <head>
-  <title>cerebro-web-test</title>
+    <title>cerebro-web-test</title>
 </head>
 
-<template name="hello">
-	{{#each log}}
-		{{method}}: {{url}}<br>
-	{{/each}}
+<body>
+    {{>main}}
+</body>
+
+<template name="main">
+    <h3>Log</h3>
+    {{#each log}}
+        {{json .}}<br>
+    {{/each}}
 </template>
