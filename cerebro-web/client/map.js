@@ -5,6 +5,7 @@ Template.map.rendered = function() {
 //    var url='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     L.tileLayer(url, {
         maxZoom: 18,
+        center: [52.22, 21.0],
         attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
     map.on('locationfound', function(e) {
