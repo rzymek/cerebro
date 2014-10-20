@@ -1,15 +1,12 @@
 function isNumber(x) {
     return !isNaN(Number(x));
 }
-
-WebApp.connectHandlers.use("/rep", function(req, res, next) {
-    var data = req.query;
+registerReport = function(data) {
     check(data, {
         lat: Match.Where(isNumber),
         lon: Match.Where(isNumber),
         name: String
     });
-    res.writeHead(200);
     var probe = {
         location: {
             lat: data.lat,
@@ -26,5 +23,10 @@ WebApp.connectHandlers.use("/rep", function(req, res, next) {
         }
     });
     Tracks.insert(probe);
-    res.end(req.body);
+};
+
+WebApp.connectHandlers.use("/rep", function(req, res) {
+    registerReport(req.query);
+    res.writeHead(200);
+    res.end('OK');
 });
