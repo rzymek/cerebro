@@ -1,11 +1,13 @@
 Template.map.rendered = function() {
-    map = new L.Map('map');
+    map = new L.Map('map', {
+        center: [52.22, 21.0],
+        zoom: 8
+    });
     L.Icon.Default.imagePath = 'packages/boustanihani_meteor-leaflet/images';
     var url = 'http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png'
 //    var url='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     L.tileLayer(url, {
         maxZoom: 18,
-        center: [52.22, 21.0],
         attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
     map.on('locationfound', function(e) {
