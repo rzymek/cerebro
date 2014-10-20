@@ -7,12 +7,14 @@
 </body>
 
 <template name="map">
-    <div id="map"></div>
+    {{> list}}
+    <div id="map"></div>    
 </template>
 
 <template name="list">
-    <ul class="x">
-        <li>item1</li>
-        <li>item2</li>
-    </ul>
+    <div class="controls">
+        {{#each probes}}
+        <button name="{{_id}}" style="background-color: {{color}}">{{name}}</button><br>
+        {{/each}}
+    </div>
 </template>

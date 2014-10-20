@@ -21,7 +21,6 @@ html-tools@1.0.2
 htmljs@1.0.2
 http@1.0.7
 id-map@1.0.1
-insecure@1.0.1
 jquery@1.0.1
 json@1.0.1
 livedata@1.0.11
@@ -40,6 +39,7 @@ reactive-var@1.0.3
 reload@1.1.1
 retry@1.0.1
 routepolicy@1.0.2
+rzymek:randomcolor@0.0.0
 session@1.0.3
 spacebars-compiler@1.0.3
 spacebars@1.0.3

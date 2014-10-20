@@ -1,16 +1,9 @@
-var list = L.Control.extend({
-    options: {
-        position: 'topright'
-    },
-    onAdd: function(map) {
-        var list = Blaze.render(Template.list, map.getContainer());
-        return list.firstNode();
-    }
-});
-
 Template.map.rendered = function() {
     var map = new L.Map('map');
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.Icon.Default.imagePath = 'packages/boustanihani_meteor-leaflet/images';
+    var url = 'http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png'
+//    var url='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    L.tileLayer(url, {
         maxZoom: 18,
         attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -18,23 +11,31 @@ Template.map.rendered = function() {
         map.setView(e.latlng, 12);
     });
     map.locate({setView: true, maxZoom: 16});
-    map.addControl(new list('bar'));
 
-    var markers = {};
+    function createIcon(color) {
+        return {
+            fillOpacity: 0.9,
+            fillColor: color,
+            color: '#000'
+        };
+    }
+    markers = {};
     Probes.find().observeChanges({
         added: function(id, probe) {
-            var marker = L.marker(probe.location);
+            var marker = L.circleMarker(probe.location, createIcon(probe.color));
+            marker.setRadius(10/*m*/);
             marker.addTo(map);
             marker.bindPopup(probe.name);
             markers[id] = marker;
-            console.log(marker);
         },
         changed: function(id, probe) {
             var marker = markers[id];
-            if (probe.location) 
+            if (probe.location)
                 marker.setLatLng(probe.location);
-            if(probe.name)
+            if (probe.name)
                 marker.setPopupContent(probe.name);
+            if (probe.color)
+                marker.setStyle(createIcon(probe.color))
         },
         removed: function(id) {
             var marker = markers[id];
