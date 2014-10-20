@@ -3,7 +3,6 @@ var list = L.Control.extend({
         position: 'topright'
     },
     onAdd: function(map) {
-        console.log(map);
         var list = Blaze.render(Template.list, map.getContainer());
         return list.firstNode();
     }
@@ -26,17 +25,19 @@ Template.map.rendered = function() {
         added: function(id, probe) {
             var marker = L.marker(probe.location);
             marker.addTo(map);
+            marker.bindPopup(probe.name);
             markers[id] = marker;
+            console.log(marker);
         },
         changed: function(id, probe) {
             var marker = markers[id];
-            if (probe.location) {
+            if (probe.location) 
                 marker.setLatLng(probe.location);
-            }
+            if(probe.name)
+                marker.setPopupContent(probe.name);
         },
         removed: function(id) {
             var marker = markers[id];
-            console.log(marker);
             map.removeLayer(marker);
             delete markers[id];
         }
