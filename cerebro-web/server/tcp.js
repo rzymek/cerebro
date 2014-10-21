@@ -1,6 +1,6 @@
-function fixPos(n) {
-    return Number(n) / 100;
-}
+toDegress = function(n) {
+    return n.substr(0,2) + n.substr(2) / 60;
+};
 
 Meteor.startup(function() {
     var net = Npm.require('net');
@@ -13,8 +13,8 @@ Meteor.startup(function() {
                 return it.indexOf('imei:') === 0;
             }).first().value();
             registerReport({
-                lat: fixPos(fields[5]),
-                lon: fixPos(fields[7]),
+                lat: toDegress(fields[5]),
+                lon: toDegress(fields[7]),
                 name: imei
             });
         }));
