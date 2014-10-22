@@ -17,7 +17,7 @@
         {{> loginButtons align="right"}} <br>
 
         {{#each probes}}
-        <button name="{{_id}}" type="button" style="background-color: {{color}}" class="btn btn-default">{{name}}</button><br>
+        <button name="{{_id}}" type="button" style="background-color: {{color}}" class="btn btn-default probe-btn">{{name}}</button><br>
         {{/each}}
         <br>
         <button type="button" class="btn btn-link add-probe">Dodaj</button>
@@ -25,12 +25,14 @@
 </template>
 
 <template name="popup">
-    <b>{{name}}</b><br>
+    <b>{{name}}</b>
+    {{#if number}}({{number}}){{/if}}
+    <br>
     {{location.lat}}N {{location.lon}}E<br>
     {{timestamp}}<br>
-    <button onclick="showTrack('{{_id}}')" class="btn btn-default">Ślad</button>
+    <button class="btn btn-default trace-btn">Ślad</button>
     <br>
-    <form role="form" onsubmit="return sendSms(this,'{{_id}}')">
+    <form role="form" method="post">
         <input name="sms" type="text" class="form-control" placeholder="SMS">
     </form>
 </template>

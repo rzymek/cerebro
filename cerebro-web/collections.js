@@ -2,6 +2,8 @@ Probes = new Mongo.Collection('probes');
 Tracks = new Mongo.Collection('tracks');
 
 isAdmin = function(userId) {
+    if(!userId)
+        return false;
     var user = Meteor.users.findOne(userId);
     var email = user && _.chain(user.emails).pluck('address').head().value();
     return email === 'rzymek@gmail.com';
@@ -22,14 +24,8 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('probes', function() {
-        if (!this.userId) {
-            this.ready();
-            return;
+        if (isAdmin(this.userId)) {
+            return Probes.find();
         }
-        if (!isAdmin(Meteor.userId)) {
-            this.ready();
-            return;
-        }
-        return Probes.find();
     });
 }

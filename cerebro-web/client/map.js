@@ -23,7 +23,9 @@ Template.map.rendered = function() {
         };
     }
     function createPopup(id, probe) {
-        return Blaze.toHTMLWithData(Template.popup, _.extend(probe, {_id: id}));
+        var div = document.createElement("div");
+        Blaze.renderWithData(Template.popup, _.extend(probe, {_id: id}), div);
+        return div;
     }
     markers = {};
     Probes.find().observeChanges({
@@ -38,8 +40,6 @@ Template.map.rendered = function() {
             var marker = markers[id];
             if (probe.location)
                 marker.setLatLng(probe.location);
-            if (probe.name)
-                marker.setPopupContent(createPopup(id, probe));
             if (probe.color)
                 marker.setStyle(createIcon(probe.color));
         },

@@ -1,1 +1,1 @@
-meteor deploy cerebro.meteor.com
+meteor deploy cerebro.meteor.com --settings settings.json
