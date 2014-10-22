@@ -24,6 +24,7 @@
 
 <template name="popup">
     <b>{{name}}</b><br>
-    {{location.lat}} {{location.lon}}<br>
+    {{location.lat}}N {{location.lon}}E<br>
+    {{timestamp}}<br>
     <button onclick="showTrack('{{_id}}')">Ślad</button>
 </template>
