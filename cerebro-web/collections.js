@@ -28,4 +28,9 @@ if (Meteor.isServer) {
             return Probes.find();
         }
     });
+    Meteor.publish('tracks', function(id) {
+        if (isAdmin(this.userId)) {
+            return Tracks.find({name: id});
+        }
+    });
 }

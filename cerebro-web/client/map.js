@@ -17,7 +17,7 @@ Template.map.rendered = function() {
 
     function createIcon(color) {
         return {
-            fillOpacity: 0.9,
+            fillOpacity: 0.7,
             fillColor: color,
             color: '#000'
         };
@@ -33,7 +33,7 @@ Template.map.rendered = function() {
     Probes.find().observeChanges({
         added: function(id, probe) {
             var marker = L.circleMarker(probe.location, createIcon(probe.color));
-            marker.setRadius(10/*m*/);
+            marker.setRadius(7/*m*/);
             marker.addTo(map);
             marker.bindPopup(createPopup(id));
             markers[id] = marker;
