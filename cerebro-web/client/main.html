@@ -15,10 +15,12 @@
 <template name="list">
     <div class="controls">
         {{> loginButtons align="right"}} <br>
-        
+
         {{#each probes}}
-        <button name="{{_id}}" style="background-color: {{color}}">{{name}}</button><br>
+        <button name="{{_id}}" type="button" style="background-color: {{color}}" class="btn btn-default">{{name}}</button><br>
         {{/each}}
+        <br>
+        <button type="button" class="btn btn-link add-probe">Dodaj</button>
     </div>
 </template>
 
@@ -26,5 +28,9 @@
     <b>{{name}}</b><br>
     {{location.lat}}N {{location.lon}}E<br>
     {{timestamp}}<br>
-    <button onclick="showTrack('{{_id}}')">Ślad</button>
+    <button onclick="showTrack('{{_id}}')" class="btn btn-default">Ślad</button>
+    <br>
+    <form role="form" onsubmit="return sendSms(this,'{{_id}}')">
+        <input name="sms" type="text" class="form-control" placeholder="SMS">
+    </form>
 </template>

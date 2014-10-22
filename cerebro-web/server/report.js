@@ -5,25 +5,26 @@ registerReport = function(data) {
     check(data, {
         lat: Match.Where(isNumber),
         lon: Match.Where(isNumber),
+        number: Match.Optional(String),
         name: String
     });
-    var probe = {
-        location: {
-            lat: Number(data.lat),
-            lon: Number(data.lon)
-        },
-        name: data.name,
-        timestamp: new Date()
+    data.location = {
+        lat: data.lat,
+        lon: data.lon
     };
+    delete data.lat;
+    delete data.lon;
+    data.timestamp = new Date();
+
     Probes.upsert({name: data.name}, {
-        $set: probe,
+        $set: data,
         $setOnInsert: {
             color: randomColor(),
             created: new Date()
         }
     });
-    probe.name = Probes.findOne({name: data.name})._id;
-    Tracks.insert(probe);
+    data.name = Probes.findOne({name: data.name})._id;
+    Tracks.insert(data);
 };
 
 WebApp.connectHandlers.use("/rep", function(req, res) {

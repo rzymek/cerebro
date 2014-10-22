@@ -1,6 +1,12 @@
 Probes = new Mongo.Collection('probes');
 Tracks = new Mongo.Collection('tracks');
 
+isAdmin = function(userId) {
+    var user = Meteor.users.findOne(userId);
+    var email = user && _.chain(user.emails).pluck('address').head().value();
+    return email === 'rzymek@gmail.com';
+};
+
 if (Meteor.isServer) {
     Probes.allow({
         insert: function(userId, probe) {
@@ -20,9 +26,7 @@ if (Meteor.isServer) {
             this.ready();
             return;
         }
-        var user = Meteor.users.findOne(this.userId);
-        var email = user && _.chain(user.emails).pluck('address').head().value();
-        if (email !== 'rzymek@gmail.com') {
+        if (!isAdmin(Meteor.userId)) {
             this.ready();
             return;
         }
