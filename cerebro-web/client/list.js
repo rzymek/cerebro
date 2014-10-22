@@ -31,5 +31,10 @@ Template.popup.events({
                 color: randomColor()
             }
         });
+    },
+    'click .remove-btn': function() {
+        if(window.confirm("Usunąć z "+this.name+"?")) {
+            Probes.remove(this._id);
+        }
     }
 });

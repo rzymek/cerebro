@@ -18,8 +18,8 @@ if (Meteor.isServer) {
         update: function() {
             return true;
         },
-        remove: function() {
-            return true;
+        remove: function(userId) {
+            return isAdmin(userId);
         }
     });
 
