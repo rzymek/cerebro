@@ -11,4 +11,6 @@ html, body, #map {
     right: 0;
     top:0;
     z-index: 999;
+    background-color: white;
+    padding: 3px;
 }

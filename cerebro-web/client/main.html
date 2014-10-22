@@ -14,6 +14,8 @@
 
 <template name="list">
     <div class="controls">
+        {{> loginButtons align="right"}} <br>
+        
         {{#each probes}}
         <button name="{{_id}}" style="background-color: {{color}}">{{name}}</button><br>
         {{/each}}

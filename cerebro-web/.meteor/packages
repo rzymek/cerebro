@@ -8,4 +8,6 @@ autopublish
 boustanihani:meteor-leaflet
 rzymek:randomcolor
 webapp
+accounts-password
+accounts-ui
 
