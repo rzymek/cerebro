@@ -27,7 +27,7 @@ registerReport = function(data) {
     Tracks.insert(data);
 };
 
-WebApp.connectHandlers.use("/rep", function(req, res) {
+WebApp.connectHandlers.use("/report", function(req, res) {
     registerReport(req.query);
     res.writeHead(200);
     res.end('OK');
