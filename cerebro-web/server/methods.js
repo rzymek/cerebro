@@ -17,7 +17,7 @@ Meteor.methods({
                 message: text,
                 nounicode: 1,
                 max_parts: 1,
-                test: 1
+                test:  Meteor.settings.smsapi.test ? 1 : 0
             }
         });
     },
@@ -35,6 +35,6 @@ Meteor.methods({
                     "type": "Activate"
                 }
             }
-        })
+        });
     }
 });

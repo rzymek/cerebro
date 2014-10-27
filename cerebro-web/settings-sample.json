@@ -1,7 +1,8 @@
 {
     "smsapi": {
         "user": null,
-        "pass": null
+        "pass": null,
+        "test": true
     },
     "parse": {
         "appId": null,
