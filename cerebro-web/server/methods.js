@@ -9,10 +9,7 @@ Meteor.methods({
 
         var probe = Probes.findOne(probeId);
         check(probe, Match.ObjectIncluding({number: String}));
-        check(Meteor.settings.smsapi, {
-            user: String,
-            pass: String
-        });
+        console.log(probe.number+" <<< "+text);
         return HTTP.post('https://ssl.smsapi.pl/sms.do', {
             params: {
                 username: Meteor.settings.smsapi.user,
@@ -20,7 +17,8 @@ Meteor.methods({
                 to: probe.number,
                 message: text,
                 nounicode: 1,
-                max_parts: 1
+                max_parts: 1,
+                test:1
             }
         });
     }
