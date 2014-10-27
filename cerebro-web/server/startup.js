@@ -3,4 +3,8 @@ Meteor.startup(function() {
         user: String,
         pass: String
     });
+    check(Meteor.settings.parse, {
+        appId: String,
+        restKey: String
+    });
 });

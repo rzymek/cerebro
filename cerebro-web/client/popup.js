@@ -32,5 +32,8 @@ Template.popup.events({
                 $set: {number: number}
             });
         }
+    },
+    'click .activate-btn': function() {
+        Meteor.call('activate', this._id);
     }
 });

@@ -1,0 +1,10 @@
+{
+    "smsapi": {
+        "user": null,
+        "pass": null
+    },
+    "parse": {
+        "appId": null,
+        "restKey": null
+    }
+}
