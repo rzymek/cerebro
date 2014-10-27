@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.parse.Parse;
 import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 
 public class App extends Application implements UncaughtExceptionHandler {
 	protected Config.Read config;
@@ -22,9 +23,8 @@ public class App extends Application implements UncaughtExceptionHandler {
 	}
 	
 	public void setupParse() {
-		ParseInstallation inst = ParseInstallation.getCurrentInstallation();
-		inst.put("channel", config.getString(Config.PUSH_CHANNEL));
-		inst.saveInBackground();
+		ParseInstallation.getCurrentInstallation().saveInBackground();
+		ParsePush.subscribeInBackground((String) Config.PUSH_CHANNEL.defValue);
 	}
 
 

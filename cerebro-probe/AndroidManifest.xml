@@ -4,15 +4,16 @@
     android:versionCode="11"
     android:versionName="1.1.1" >
 
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- push: -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- parse push: -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -20,8 +21,9 @@
     <permission
         android:name="cerebro.probe.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="cerebro.probe.permission.C2D_MESSAGE" />
-    
+
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
@@ -53,29 +55,39 @@
             android:name=".activities.ViewLogActivity"
             android:label="@string/title_activity_view_log" >
         </activity>
+        <!--
         <receiver
             android:name=".services.RequestReceiver"
             android:exported="false" >
             <intent-filter>
-                <!-- can't be @string/action. must be inline -->
+
+                <!- can't be @string/action. must be inline ->
                 <action android:name="cerebro.probe.MortarMessage" />
             </intent-filter>
-            <!-- 
             <intent-filter>
                 <action android:name="android.intent.action.DATA_SMS_RECEIVED" />
 
                 <data android:port="@integer/sms_port" />
                 <data android:scheme="sms" />
             </intent-filter>
-             -->
         </receiver>
-        
+        -->
+
         <service android:name="com.parse.PushService" />
 
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".services.PushReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
         <receiver

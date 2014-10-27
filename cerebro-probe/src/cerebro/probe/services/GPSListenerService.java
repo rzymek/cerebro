@@ -110,6 +110,9 @@ public class GPSListenerService extends Service {
 		report.put("time", new Date(location.getTime()));
 		report.put("device", getDeviceId(this));
 		report.saveInBackground();
+		
+		
+		
 	}
 
 	private static String getDeviceId(Context context) {

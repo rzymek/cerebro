@@ -13,16 +13,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class RequestReceiver extends BroadcastReceiver {
+public class SMSReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Logger logger = new Logger(context);
 		try {
-			if (intent.hasExtra("com.parse.Data")) {
-				onReceivePush(context, intent, logger);
-			} else {
-				onReceiveSMS(context, intent, logger);
-			}
+			onReceiveSMS(context, intent, logger);
 		} catch (Exception ex) {
 			Utils.handle(ex, context);
 		} finally {
@@ -52,9 +48,10 @@ public class RequestReceiver extends BroadcastReceiver {
 		if (sms == null) {
 			sms = (GsmMessage) extras.getSerializable("mortar");
 		}
-		
-//		String msg = message.getClass().getSimpleName() + " from " + sms.from + " (" + new Date(sms.timestamp) + ")";
-//		logger.log("sms: " + msg);
-//		message.onReceive(context);
+
+		// String msg = message.getClass().getSimpleName() + " from " + sms.from
+		// + " (" + new Date(sms.timestamp) + ")";
+		// logger.log("sms: " + msg);
+		// message.onReceive(context);
 	}
 }
