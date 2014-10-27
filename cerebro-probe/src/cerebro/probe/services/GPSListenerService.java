@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
+import retrofit.RestAdapter;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -14,6 +15,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;
@@ -81,6 +83,10 @@ public class GPSListenerService extends Service {
 			}
 		}
 	};
+	
+	private static Cerebro cerebro = new RestAdapter.Builder()
+	    .setEndpoint("http://cerebro.meteor.com")
+	    .build().create(Cerebro.class);
 
 	@Override
 	public void onCreate() {
@@ -99,7 +105,7 @@ public class GPSListenerService extends Service {
 		logger.log("listener created\n" + Utils.getSystemInfo());
 	}
 
-	protected void reportLocation(Location location) {
+	protected void reportLocation(final Location location) {
 		logger.log("reporting location: acc:" + location.getAccuracy());
 		lastReport = new DateTime();
 
@@ -111,7 +117,18 @@ public class GPSListenerService extends Service {
 		report.put("device", getDeviceId(this));
 		report.saveInBackground();
 		
-		
+		new AsyncTask<Void, Void, String>() {
+
+			@Override
+			protected String doInBackground(Void... params) {
+				return cerebro.report(
+						location.getLatitude(), 
+						location.getLongitude(), 
+						getDeviceId(GPSListenerService.this), 
+						null);				
+			}
+			
+		}.execute();
 		
 	}
 
