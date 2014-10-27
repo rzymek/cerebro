@@ -20,8 +20,16 @@ Template.popup.events({
         });
     },
     'click .remove-btn': function() {
-        if(window.confirm("Usunąć z "+this.name+"?")) {
+        if (window.confirm("Usunąć z " + this.name + "?")) {
             Probes.remove(this._id);
+        }
+    },
+    'click .set-number-btn': function() {
+        var number = window.prompt("Numer komórkowy:", this.number || '');
+        if (number !== null) {
+            Probes.update(this._id, {
+                $set: {number: number}
+            });
         }
     }
 });
