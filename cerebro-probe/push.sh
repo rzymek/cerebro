@@ -5,7 +5,9 @@ curl -X POST \
   -d '{
         "channels": ["default"],
         "data": {
-          "type":"Activate"
+          "type":"Activate",
+          "gpsOnMinutes": 30,
+          "checkIntervalSec": 60
         }
       }' \
   https://api.parse.com/1/push 
