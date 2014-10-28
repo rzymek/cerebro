@@ -22,6 +22,7 @@ import android.telephony.TelephonyManager;
 import cerebro.lib.AbstractLocationListener;
 import cerebro.lib.SateliteListener;
 import cerebro.lib.Utils;
+import cerebro.lib.rest.Report;
 import cerebro.lib.rest.Services;
 import cerebro.probe.App;
 import cerebro.probe.Logger;
@@ -117,13 +118,18 @@ public class GPSListenerService extends Service {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return Services.cerebro.report(
-						location.getLatitude(), 
-						location.getLongitude(), 
-						Utils.getDeviceId(GPSListenerService.this), 
-						getPhoneNumber());				
+				Report report = new Report();
+				report.deviceId = Utils.getDeviceId(GPSListenerService.this);
+				report.type = getApplicationInfo().packageName; 
+				report.location.lat = location.getLatitude();
+				report.location.lon = location.getLongitude();
+				report.number = getPhoneNumber();
+				report.speed = location.getSpeed();
+				report.accuracy = location.getAccuracy();
+				report.timestamp_gps = new Date(location.getTime());
+				return Services.cerebro.report(report);
 			}
-			
+
 		}.execute();
 		
 	}

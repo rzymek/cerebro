@@ -9,6 +9,7 @@ import android.telephony.SmsMessage;
 import cerebro.central.Logger;
 import cerebro.central.Tk106Sms;
 import cerebro.lib.Utils;
+import cerebro.lib.rest.Report;
 import cerebro.lib.rest.Services;
 
 public class RequestReceiver extends BroadcastReceiver {
@@ -20,6 +21,7 @@ public class RequestReceiver extends BroadcastReceiver {
 		Logger logger = new Logger(context);
 		try {
 			onReceiveSMS(context, intent, logger);
+			this.abortBroadcast();
 		} catch (Exception ex) {
 			Utils.handle(ex, context);
 		} finally {
@@ -32,21 +34,32 @@ public class RequestReceiver extends BroadcastReceiver {
 			Bundle pudsBundle = intent.getExtras();
 			Object[] pdus = (Object[]) pudsBundle.get("pdus");
 			final SmsMessage sms = SmsMessage.createFromPdu((byte[]) pdus[0]);
-			logger.log(String.format("sms: [%s] %s", sms.getOriginatingAddress(), sms.getMessageBody()));
+			// logger.log(String.format("sms: [%s] %s",
+			// sms.getOriginatingAddress(), sms.getMessageBody()));
 
 			Tk106Sms message = Tk106Sms.create(sms.getMessageBody());
 			if (message != null) {
 				new AsyncTask<Tk106Sms, Void, String>() {
 					protected String doInBackground(Tk106Sms... params) {
-						Tk106Sms message = params[0];
+						Tk106Sms tk = params[0];
 						for (int i = 0; i < 5; i++) {
 							try {
-								return Services.cerebro.report(
-										message.lat, 
-										message.lon, 
-										message.imei, 
-										sms.getOriginatingAddress(),
-										Utils.getDeviceId(context));
+								Report report = new Report();
+								report.deviceId = tk.imei;
+								report.type = context.getApplicationInfo().packageName;
+								report.location.lat = tk.lat;
+								report.location.lon = tk.lon;
+								report.number = sms.getOriginatingAddress();
+								report.speed = tk.speed;
+								report.timestamp_gps = tk.date;
+								
+								report.requestedBy = tk.requestedBy;
+								report.battery = tk.battery;
+								report.signal = tk.signal;
+								
+								report.bridgeId = Utils.getDeviceId(context);
+								
+								return Services.cerebro.report(report);
 							} catch (Exception ex) {
 								logger.log(ex.toString());
 								try {

@@ -1,35 +1,38 @@
-function isNumber(x) {
-    return !isNaN(Number(x));
-}
 registerReport = function(data) {
     check(data, {
-        lat: Match.Where(isNumber),
-        lon: Match.Where(isNumber),
+        location: {
+            lat: Match.Where(Number),
+            lon: Match.Where(Number)
+        },
+        deviceId: String,
+        type: String,
         number: Match.Optional(String),
-        bridge: Match.Optional(String),
-        name: String
+        speed: Match.Optional(Number),
+        accuracy: Match.Optional(Number),
+        requestedBy: String,
+        battery: String,
+        signal: String,
+        bridgeId: Match.Optional(String),
+        timestamp_gps: Match.Optional(Date)
     });
-    data.location = {
-        lat: data.lat,
-        lon: data.lon
-    };
-    delete data.lat;
-    delete data.lon;
-    data.timestamp = new Date();
+    data.timestamp_received = new Date();
 
-    Probes.upsert({name: data.name}, {
+    Probes.upsert(data.deviceId, {
         $set: data,
         $setOnInsert: {
             color: randomColor(),
-            created: new Date()
+            timestamp_created: new Date()
         }
     });
-    data.name = Probes.findOne({name: data.name})._id;
     Tracks.insert(data);
 };
 
-WebApp.connectHandlers.use("/report", function(req, res) {
-    registerReport(req.query);
+WebApp.connectHandlers
+        .use(connect.urlencoded())
+        .use(connect.json())
+        .use("/report", function(req, res) {
+    console.log(req.body);
+    registerReport(req.body);
     res.writeHead(200);
     res.end('OK');
 });
