@@ -25,7 +25,14 @@ registerReport = function(data) {
             timestamp_created: new Date()
         }
     });
-    Tracks.insert(data);
+    Tracks.insert({
+        deviceId: data.deviceId,
+        location: data.location,
+        speed: data.speed,
+        accuracy: data.accuracy,
+        battery: data.battery,
+        timestamp: data.timestamp_gps
+    });
 };
 
 WebApp.connectHandlers
