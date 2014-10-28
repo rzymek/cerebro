@@ -41,4 +41,8 @@ public class Activate implements Parcelable, ReceivedMessage {
 		dest.writeInt(checkIntervalSec);
 	}
 
+	@Override
+	public String toString() {
+		return "Activate for "+gpsOnMinutes+"min, interval: "+checkIntervalSec+"sec";
+	}
 }

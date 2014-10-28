@@ -1,4 +1,4 @@
-package cerebro.central.activities;
+package cerebro.bridge.activities;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,9 +27,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import cerebro.central.App;
-import cerebro.central.Logger;
-import cerebro.central.R;
+import cerebro.bridge.App;
+import cerebro.bridge.Logger;
+import cerebro.bridge.R;
 import cerebro.lib.Utils;
 
 public class ViewLogActivity extends ActionBarActivity {

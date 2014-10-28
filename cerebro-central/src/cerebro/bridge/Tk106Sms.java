@@ -1,4 +1,4 @@
-package cerebro.central;
+package cerebro.bridge;
 
 import java.util.Date;
 import java.util.Locale;

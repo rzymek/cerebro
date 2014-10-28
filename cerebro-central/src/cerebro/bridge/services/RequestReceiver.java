@@ -1,4 +1,4 @@
-package cerebro.central.services;
+package cerebro.bridge.services;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import cerebro.central.Logger;
-import cerebro.central.Tk106Sms;
+import cerebro.bridge.Logger;
+import cerebro.bridge.Tk106Sms;
 import cerebro.lib.Utils;
 import cerebro.lib.rest.Report;
 import cerebro.lib.rest.Services;

@@ -2,13 +2,13 @@
 <resources>
 
     <string name="app_name">Cerebro Bridge</string>
-    <string name="title_activity_view_log">Cerebro Log</string>
+    <string name="title_activity_view_log">Cerebro Bridge</string>
     <string name="reset">Reset</string>
     <string name="refresh">Refresh</string>
     <string name="export">Export</string>
     <string name="report_location">Report Location</string>
     <string name="shutdown">Shutdown</string>
-    <string name="app_started">Mortar started</string>
+    <string name="app_started">Cerebro Bridge started</string>
     <string name="reset_log">Reset log?</string>
 
 </resources>

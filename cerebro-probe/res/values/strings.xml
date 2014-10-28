@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">Cerebro Probe</string>
-    <string name="title_activity_info">Mortar Hit</string>
-    <string name="title_activity_view_log">Mortal Log</string>
+    <string name="title_activity_info">Cerebro Info</string>
+    <string name="title_activity_view_log">Cerebro Probe</string>
     <string name="reset">Reset</string>
     <string name="refresh">Refresh</string>
     <string name="export">Export</string>
