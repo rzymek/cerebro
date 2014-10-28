@@ -9,9 +9,9 @@ registerReport = function(data) {
         number: Match.Optional(String),
         speed: Match.Optional(Number),
         accuracy: Match.Optional(Number),
-        requestedBy: String,
-        battery: String,
-        signal: String,
+        requestedBy: Match.Optional(String),
+        battery: Match.Optional(String),
+        signal: Match.Optional(String),
         bridgeId: Match.Optional(String),
         timestamp_gps: Match.Optional(Date)
     });
@@ -21,6 +21,7 @@ registerReport = function(data) {
         $set: data,
         $setOnInsert: {
             color: randomColor(),
+            name: data.deviceId,
             timestamp_created: new Date()
         }
     });
@@ -30,9 +31,9 @@ registerReport = function(data) {
 WebApp.connectHandlers
         .use(connect.urlencoded())
         .use(connect.json())
-        .use("/report", function(req, res) {
+        .use("/report", Meteor.bindEnvironment(function(req, res) {
     console.log(req.body);
     registerReport(req.body);
     res.writeHead(200);
     res.end('OK');
-});
+}));

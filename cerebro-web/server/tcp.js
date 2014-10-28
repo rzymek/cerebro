@@ -14,9 +14,12 @@ Meteor.startup(function() {
                     return it.indexOf('imei:') === 0;
                 }).first().value();
                 registerReport({
-                    lat: toDegress(fields[5]),
-                    lon: toDegress(fields[7]),
-                    name: imei
+                    location: {
+                        lat: toDegress(fields[5]),
+                        lon: toDegress(fields[7])
+                    },
+                    type: "tk106.gprs",
+                    deviceId: imei
                 });
             } catch (err) {
                 console.error(err, data, line);

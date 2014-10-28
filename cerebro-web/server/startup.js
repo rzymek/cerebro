@@ -1,7 +1,7 @@
 Meteor.startup(function() {
     check(Meteor.settings.smsapi, {
         user: String,
-        pass: String,
+        pass: String
     });
     check(Meteor.settings.parse, {
         appId: String,
@@ -10,7 +10,7 @@ Meteor.startup(function() {
 });
 
 Accounts.validateNewUser(function(user) {
-    if (user.username === 'rzymek@gmail.com')
+    if (user.emails[0].address === 'rzymek@gmail.com')
         return true;
     throw new Meteor.Error(403, "Disabled");
 });

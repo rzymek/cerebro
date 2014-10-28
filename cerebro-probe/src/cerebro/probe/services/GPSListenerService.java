@@ -143,12 +143,10 @@ public class GPSListenerService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		logger.log("start command");
 		request = intent.getParcelableExtra(EXTRA_REQUEST);
-		if (request == null) {
-
-		} else {
+		if (request != null) {
 			started = new DateTime();
 			lastReport = null;
-			logger.log("GPS: activate");
+			logger.log("GPS service: "+request);
 
 			gps.removeUpdates(gpsListener);
 			gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);

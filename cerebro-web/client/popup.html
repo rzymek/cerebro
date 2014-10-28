@@ -1,14 +1,19 @@
 <template name="popup">
-    <b>{{name}}</b>
-    {{#if number}}({{number}}){{/if}}
-    <br>
-    {{location.lat}}N {{location.lon}}E<br>
-    {{timestamp}}<br>
-    <button class="btn btn-primary btn-sm trace-btn">Ślad</button>
-    <button class="btn btn-default btn-sm color-btn" style="background-color: {{color}}">Kolor</button>
-    <button class="btn btn-danger btn-sm remove-btn" >Usuń</button>
-    <button class="btn btn-primary btn-sm set-number-btn">Numer</button>
-    <button class="btn btn-primary btn-sm activate-btn">Aktywuj</button>
+    <b>{{name}}</b>   {{#if number}}({{number}}){{/if}} <br>
+    <table>
+        <tr><th>Rodzaj: </th><td>{{type}}</td></tr>
+        <tr><th>Czas GPS: </th><td>{{timestamp_gps}}</td></tr>
+        <tr><th>Prędkość: </th><td>{{speed}}</td></tr>
+        <tr><th>Dokładność: </th><td>{{accuracy}}</td></tr>
+        <tr><th>Bateria: </th><td>{{battery}}</td></tr>
+        <tr><th>Zasięg: </th><td>{{signal}}</td></tr>
+    </table>
+    <select class="form-control probe-actions">
+        <option></option>
+        {{#each actions}}
+            <option>{{.}}</option>
+        {{/each}}
+    </select>
     <br>
     {{#if number}}
     <form role="form" method="post">

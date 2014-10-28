@@ -1,8 +1,9 @@
 package cerebro.lib.rest;
 
-import retrofit.http.GET;
+import retrofit.http.Body;
+import retrofit.http.POST;
 
 public interface CerebroService {
-	@GET("/report")
-	String report(Report report);
+	@POST("/report")
+	String report(@Body Report report);
 }
