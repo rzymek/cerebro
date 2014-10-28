@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Cerebro Central</string>
+    <string name="app_name">Cerebro Bridge</string>
     <string name="title_activity_view_log">Cerebro Log</string>
     <string name="reset">Reset</string>
     <string name="refresh">Refresh</string>

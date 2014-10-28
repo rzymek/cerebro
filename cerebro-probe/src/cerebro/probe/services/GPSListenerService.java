@@ -6,7 +6,6 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-import retrofit.RestAdapter;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -17,12 +16,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.IBinder;
-import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.telephony.TelephonyManager;
 import cerebro.lib.AbstractLocationListener;
 import cerebro.lib.SateliteListener;
 import cerebro.lib.Utils;
+import cerebro.lib.rest.Services;
 import cerebro.probe.App;
 import cerebro.probe.Logger;
 import cerebro.probe.R;
@@ -84,10 +84,6 @@ public class GPSListenerService extends Service {
 		}
 	};
 	
-	private static Cerebro cerebro = new RestAdapter.Builder()
-	    .setEndpoint("http://cerebro.meteor.com")
-	    .build().create(Cerebro.class);
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -108,32 +104,33 @@ public class GPSListenerService extends Service {
 	protected void reportLocation(final Location location) {
 		logger.log("reporting location: acc:" + location.getAccuracy());
 		lastReport = new DateTime();
-
+		
 		ParseObject report = new ParseObject("locrep");
 		report.put("lat", location.getLatitude());
 		report.put("lon", location.getLongitude());
 		report.put("acc", location.getAccuracy());
 		report.put("time", new Date(location.getTime()));
-		report.put("device", getDeviceId(this));
+		report.put("device", Utils.getDeviceId(this));
 		report.saveInBackground();
 		
 		new AsyncTask<Void, Void, String>() {
 
 			@Override
 			protected String doInBackground(Void... params) {
-				return cerebro.report(
+				return Services.cerebro.report(
 						location.getLatitude(), 
 						location.getLongitude(), 
-						getDeviceId(GPSListenerService.this), 
-						null);				
+						Utils.getDeviceId(GPSListenerService.this), 
+						getPhoneNumber());				
 			}
 			
 		}.execute();
 		
 	}
 
-	private static String getDeviceId(Context context) {
-		return Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+	protected String getPhoneNumber() {
+		TelephonyManager telephony = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+		return telephony.getLine1Number();
 	}
 
 	@Override

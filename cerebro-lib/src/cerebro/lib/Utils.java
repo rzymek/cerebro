@@ -8,6 +8,7 @@ import java.util.Set;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -55,5 +56,9 @@ public class Utils {
 			buf.append(key).append(":").append(bundle.get(key)).append(", ");
 		}
 		return buf.toString();
+	}
+
+	public static String getDeviceId(Context context) {
+		return Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
 	}
 }

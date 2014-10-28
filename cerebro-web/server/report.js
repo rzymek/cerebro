@@ -6,6 +6,7 @@ registerReport = function(data) {
         lat: Match.Where(isNumber),
         lon: Match.Where(isNumber),
         number: Match.Optional(String),
+        bridge: Match.Optional(String),
         name: String
     });
     data.location = {

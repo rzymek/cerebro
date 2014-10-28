@@ -10,7 +10,7 @@ public class App extends cerebro.lib.App {
 		super.onCreate();
 		logger = new Logger(this);
 	}
-
+	
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		logger.log(Utils.getStackString(ex));

@@ -24,7 +24,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -32,8 +31,6 @@ import cerebro.central.App;
 import cerebro.central.Logger;
 import cerebro.central.R;
 import cerebro.lib.Utils;
-
-import com.parse.ParseObject;
 
 public class ViewLogActivity extends ActionBarActivity {
 	/**
@@ -149,12 +146,6 @@ public class ViewLogActivity extends ActionBarActivity {
 				if (logs == null) {
 					return;
 				}
-				TelephonyManager telephony = (TelephonyManager) ViewLogActivity.this.getSystemService(TELEPHONY_SERVICE);
-				ParseObject parse = new ParseObject("logs");
-				parse.put("log", logs.log.toString());
-				parse.put("number", "" + telephony.getLine1Number());
-				parse.saveInBackground();
-//				Utils.toast("Logs uploaded", getApplicationContext());
 
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
