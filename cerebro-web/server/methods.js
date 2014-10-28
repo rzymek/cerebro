@@ -17,24 +17,32 @@ Meteor.methods({
                 message: text,
                 nounicode: 1,
                 max_parts: 1,
-                test:  Meteor.settings.smsapi.test ? 1 : 0
+                test: Meteor.settings.smsapi.test ? 1 : 0
             }
         });
     },
     activate: function(probeId) {
         check(probeId, String);
         var probe = Probes.findOne(probeId);
-        return HTTP.post('https://api.parse.com/1/push', {
-            headers: {
-                "X-Parse-Application-Id": Meteor.settings.parse.appId,
-                "X-Parse-REST-API-Key": Meteor.settings.parse.restKey
-            },
-            data: {
-                "channels": ["default"],
-                "data": {
-                    "type": "Activate"
+        if (probe.type === 'cerebro.probe') {
+            return HTTP.post('https://api.parse.com/1/push', {
+                headers: {
+                    "X-Parse-Application-Id": Meteor.settings.parse.appId,
+                    "X-Parse-REST-API-Key": Meteor.settings.parse.restKey
+                },
+                data: {
+                    channels: ["default"],
+                    data: {
+                        type: "Activate",
+                        gpsOnMinutes: 30,
+                        checkIntervalSec: 60
+                    }
                 }
-            }
-        });
+            });
+        } else if (probe.type === 'cerebro.bridge') {
+            
+        } else if (probe.type === 'tk106.gprs') {
+
+        }
     }
 });

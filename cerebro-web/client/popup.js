@@ -32,7 +32,6 @@ var actions = {
     },
     "Aktywuj": function() {
         Meteor.call('activate', this._id);
-
     }
 }
 Template.popup.helpers({
