@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import cerebro.bridge.Logger;
 import cerebro.bridge.Tk106Sms;
+import android.util.Log;
+import cerebro.central.Logger;
+import cerebro.central.Tk106Sms;
 import cerebro.lib.Utils;
 import cerebro.lib.rest.Report;
 import cerebro.lib.rest.Services;
@@ -39,6 +42,7 @@ public class RequestReceiver extends BroadcastReceiver {
 
 			Tk106Sms message = Tk106Sms.create(sms.getMessageBody());
 			if (message != null) {
+				logger.log("tk106 message: " + message);
 				new AsyncTask<Tk106Sms, Void, String>() {
 					protected String doInBackground(Tk106Sms... params) {
 						Tk106Sms tk = params[0];
@@ -61,16 +65,17 @@ public class RequestReceiver extends BroadcastReceiver {
 								
 								return Services.cerebro.report(report);
 							} catch (Exception ex) {
+								Log.e("TK", "report", ex);
 								logger.log(ex.toString());
-								try {
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {
-									break;
-								}
+							}
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								break;
 							}
 						}
 						return null;
-					};
+					}
 				}.execute(message);
 			}
 		} catch (Exception ex) {
