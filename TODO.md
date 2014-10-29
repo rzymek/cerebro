@@ -4,6 +4,4 @@ Tk106:
 * Sterowanie pojedyńczymi androidami
 Admin page:
 	* start date for probes & trace
-	* show/hide probes
-        * url mapy: kilka map na mapbox + raw openstreetview
 	* wysyłka sms do wielu tk106

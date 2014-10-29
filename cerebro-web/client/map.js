@@ -4,7 +4,11 @@ Template.map.rendered = function() {
         zoom: 8
     });
     L.Icon.Default.imagePath = 'packages/boustanihani_meteor-leaflet/images';
+    
     var url = 'http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png'
+    if(Meteor.user() && Meteor.user().settings && Meteor.user().settings.mapUrl) {
+        url = Meteor.user().settings.mapUrl;
+    }
 //    var url='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     L.tileLayer(url, {
         maxZoom: 18,

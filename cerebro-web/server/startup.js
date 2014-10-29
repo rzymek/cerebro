@@ -14,3 +14,8 @@ Accounts.validateNewUser(function(user) {
         return true;
     throw new Meteor.Error(403, "Disabled");
 });
+Meteor.users.allow({
+    update: function(userId, doc, fieldNames){
+        return fieldNames.length === 1 && fieldNames[0] == 'settings';        
+    }
+})
