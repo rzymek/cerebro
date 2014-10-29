@@ -8,6 +8,7 @@ Meteor.startup(function() {
         console.log('conn: ' + socket.remoteAddress);
         socket.on('data', Meteor.bindEnvironment(function(data) {
             var line = data.toString('ascii');
+            console.log(line);
             try {
                 var fields = line.split(/,/);
                 var imei = _.chain(fields).filter(function(it) {
