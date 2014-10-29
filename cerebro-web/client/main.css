@@ -17,3 +17,11 @@ html, body, #map {
 .probe-btn {
     width: 100%;
 }
+
+.probes {
+    background-color: #dfd
+}
+
+.disabledProbes {
+    background-color: #fdd
+}

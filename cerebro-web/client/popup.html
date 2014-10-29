@@ -1,5 +1,12 @@
 <template name="popup">
     <b>{{name}}</b>   {{#if number}}({{number}}){{/if}} <br>
+    {{>probeInfo}}
+    {{>probeActions}}
+    <br>
+    {{>probeSMS}}
+</template>
+
+<template name="probeInfo">
     <table>
         <tr><th>Rodzaj: </th><td>{{type}}</td></tr>
         <tr><th>Czas GPS: </th><td>{{timestamp_gps}}</td></tr>
@@ -8,16 +15,21 @@
         <tr><th>Bateria: </th><td>{{battery}}</td></tr>
         <tr><th>Zasięg: </th><td>{{signal}}</td></tr>
     </table>
+</template>
+
+<template name="probeActions">
     <select class="form-control probe-actions">
         <option></option>
         {{#each actions}}
-            <option>{{.}}</option>
+        <option>{{.}}</option>
         {{/each}}
     </select>
-    <br>
+</template>
+
+<template name="probeSMS">
     {{#if number}}
     <form role="form" method="post">
         <input name="sms" type="text" class="form-control" placeholder="SMS">
     </form>
-    {{/if}}
+    {{/if}}    
 </template>

@@ -1,0 +1,68 @@
+<template name="admin">
+    <div class="controls">
+        {{> loginButtons align="right"}}
+    </div>
+    <div class="container">
+        <h3>Admin</h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <select multiple class="form-control probes" size="20">
+                                    {{#each probes}}
+                                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                                    {{/each}}
+                                </select>
+                            </td>
+                            <td width="10">
+                                <buttom class="btn btn-default block-all">
+                                    <span class="glyphicon glyphicon-forward"></span>
+                                </buttom>
+                                <buttom class="btn btn-default block-one">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </buttom>
+                                <buttom class="btn btn-default unblock-one">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </buttom>
+                                <buttom class="btn btn-default unblock-all">
+                                    <span class="glyphicon glyphicon-backward"></span>
+                                </buttom>
+                            </td>
+                            <td>
+                                <select multiple class="form-control disabledProbes" size="20">
+                                    {{#each disabled}}
+                                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                                    {{/each}}
+                                </select>                    
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-8">
+                    {{#if probe}}
+                    {{> probeAdmin probe}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="probeAdmin">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{name}}</div>
+        <div class="panel-body">
+            {{#each actions}}
+            <button type="button" class="btn btn-default" value="{{.}}">
+                {{.}}
+            </button>
+            {{/each}}
+            <div style="float:right; width: 100px; height: 100px; background-color: {{color}}">
+            </div>
+            {{> probeInfo}}
+            {{> probeSMS}}
+        </div>
+    </div>
+</template>

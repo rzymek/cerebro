@@ -30,7 +30,7 @@ Template.map.rendered = function() {
         return div;
     }
     markers = {};
-    Probes.find().observeChanges({
+    getProbes().observeChanges({
         added: function(id, probe) {
             var marker = L.circleMarker(probe.location, createIcon(probe.color));
             marker.setRadius(7/*m*/);
