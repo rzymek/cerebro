@@ -1,5 +1,5 @@
 toDegress = function(n) {
-    return n.substr(0, 2) * 1 + n.substr(2) / 600;
+    return n.substr(0, 2) * 1 + n.substr(2) / 60;
 };
 
 Meteor.startup(function() {
