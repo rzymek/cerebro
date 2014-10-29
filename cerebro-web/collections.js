@@ -13,7 +13,8 @@ if (Meteor.isServer) {
     Probes.allow({
         insert: function(userId, probe) {
             probe.color = randomColor();
-            probe.blocked = false;
+            probe.blocked = true;
+            probe.timestamp_created = new Date();
             return true;
         },
         update: function() {

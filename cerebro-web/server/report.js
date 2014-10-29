@@ -20,12 +20,7 @@ registerReport = function(data) {
     data.timestamp_received = new Date();
 
     Probes.upsert(data.deviceId, {
-        $set: data,
-        $setOnInsert: {
-            color: randomColor(),
-            name: data.deviceId,
-            timestamp_created: new Date()
-        }
+        $set: data
     });
     Tracks.insert({
         deviceId: data.deviceId,
