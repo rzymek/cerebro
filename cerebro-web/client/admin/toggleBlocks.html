@@ -1,0 +1,40 @@
+<template name="toggleBlocksPage">
+    <div class="container">
+        <h3><a href="/adm">Admin</a>: Blokady</h3>
+        {{>toggleBlocks}}
+    </div>
+</template>
+<template name="toggleBlocks">
+    <table width="100%">
+    <tr>
+        <td width="49%">
+            <select multiple class="form-control probes" size="20">
+                {{#each probes}}
+                <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                {{/each}}
+            </select>
+        </td>
+        <td width="10">
+            <buttom class="btn btn-default block-all">
+                <span class="glyphicon glyphicon-forward"></span>
+            </buttom>
+            <buttom class="btn btn-default block-one">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </buttom>
+            <buttom class="btn btn-default unblock-one">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </buttom>
+            <buttom class="btn btn-default unblock-all">
+                <span class="glyphicon glyphicon-backward"></span>
+            </buttom>
+        </td>
+        <td width="49%">
+            <select multiple class="form-control disabledProbes" size="20">
+                {{#each disabled}}
+                <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                {{/each}}
+            </select>                    
+        </td>
+    </tr>
+    </table>
+</template>
