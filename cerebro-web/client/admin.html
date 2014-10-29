@@ -2,7 +2,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                {{>toggleBlocks}}
+                <select multiple class="form-control probes" size="20">
+                    {{#each probes}}
+                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                    {{/each}}
+                </select>
             </div>
             <div class="col-md-8">
                 {{>settings}}
@@ -17,15 +21,15 @@
 
 <template name="probeAdmin">
     <div class="panel panel-default">
-        <div class="panel-heading">{{name}}</div>
+        <div class="panel-heading" style="background-color: {{color}}">
+            <b>{{name}}</b> {{number}}
+        </div>
         <div class="panel-body">
             {{#each actions}}
             <button type="button" class="btn btn-default" value="{{.}}">
                 {{.}}
-            </button>
-            {{/each}}
-            <div style="float:right; width: 100px; height: 100px; background-color: {{color}}">
-            </div>
+            </button>            
+            {{/each}}           
             {{> probeInfo}}
             {{> probeSMS}}
         </div>

@@ -4,14 +4,13 @@ selectedProbe = function() {
 };
 
 Template.admin.helpers({
-    probe: selectedProbe,
-    disabled: function() {
-        return Probes.find({
-            blocked: true
-        });
-    }
+    probe: selectedProbe
 });
-
+Template.admin.events({
+    'change .probes': function(e, template) {
+        Session.set('admin_probe', e.target.value);
+    }
+})
 Template.probeAdmin.helpers({
     actions: function() {
         return getActionKeys();

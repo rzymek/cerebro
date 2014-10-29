@@ -19,7 +19,7 @@ Template.toggleBlocks.helpers({
 });
 
 Template.toggleBlocks.events({
-    'change .probes': function(e, template) {
+    'change .activeProbes': function(e, template) {
         Session.set('admin_probe', e.target.value);
         template.find('.disabledProbes').selectedIndex = -1;
     },
@@ -28,10 +28,10 @@ Template.toggleBlocks.events({
         template.find('.probes').selectedIndex = -1;
     },
     'click .block-one': function(e, template) {
-        toggleBlockOne(template.find('.probes'), true);
+        toggleBlockOne(template.find('.activeProbes'), true);
     },
     'click .block-all': function(e, template) {
-        toggleBlockAll(template, '.probes', true);
+        toggleBlockAll(template, '.activeProbes', true);
     },
     'click .unblock-one': function(e, template) {
         toggleBlockOne(template.find('.disabledProbes'), false);
