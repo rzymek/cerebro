@@ -13,8 +13,10 @@ registerReport = function(data) {
         battery: Match.Optional(String),
         signal: Match.Optional(String),
         bridgeId: Match.Optional(String),
-        timestamp_gps: Match.Optional(Date)
+        timestamp_gps: Match.Optional(String)
     });
+    if(data.timestamp_gps)
+        data.timestamp_gps = new Date(data.timestamp_gps);
     data.timestamp_received = new Date();
 
     Probes.upsert(data.deviceId, {
