@@ -2,39 +2,44 @@
     <div class="container">
         <h3><a href="/adm">Admin</a>: Blokady</h3>
         {{>toggleBlocks}}
+        
+        {{#if probe}}
+            {{> probeAdmin probe}}
+        {{/if}}
     </div>
 </template>
+
 <template name="toggleBlocks">
-    <table width="100%">
-    <tr>
-        <td width="49%">
-            <select multiple class="form-control activeProbes" size="30">
-                {{#each probes}}
-                <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
-                {{/each}}
-            </select>
-        </td>
-        <td width="10">
-            <buttom class="btn btn-default block-all">
-                <span class="glyphicon glyphicon-forward"></span>
-            </buttom>
-            <buttom class="btn btn-default block-one">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </buttom>
-            <buttom class="btn btn-default unblock-one">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </buttom>
-            <buttom class="btn btn-default unblock-all">
-                <span class="glyphicon glyphicon-backward"></span>
-            </buttom>
-        </td>
-        <td width="49%">
-            <select multiple class="form-control disabledProbes" size="30">
-                {{#each disabled}}
-                <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
-                {{/each}}
-            </select>                    
-        </td>
-    </tr>
+    <table width="100%" style="margin-bottom: 10px">
+        <tr>
+            <td width="49%">
+                <select multiple class="form-control activeProbes" size="30">
+                    {{#each probes}}
+                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                    {{/each}}
+                </select>
+            </td>
+            <td width="10">
+                <buttom class="btn btn-default block-all">
+                    <span class="glyphicon glyphicon-forward"></span>
+                </buttom>
+                <buttom class="btn btn-default block-one">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </buttom>
+                <buttom class="btn btn-default unblock-one">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </buttom>
+                <buttom class="btn btn-default unblock-all">
+                    <span class="glyphicon glyphicon-backward"></span>
+                </buttom>
+            </td>
+            <td width="49%">
+                <select multiple class="form-control disabledProbes" size="30">
+                    {{#each disabled}}
+                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                    {{/each}}
+                </select>                    
+            </td>
+        </tr>
     </table>
 </template>

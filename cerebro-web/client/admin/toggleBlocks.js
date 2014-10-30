@@ -9,12 +9,16 @@ var toggleBlockOne = function(list, block) {
         return;
     Probes.update(list.options[idx].value, {$set: {blocked: block}});
 };
-
 Template.toggleBlocks.helpers({
     disabled: function() {
         return Probes.find({
             blocked: true
         });
+    }
+});
+Template.toggleBlocksPage.helpers({
+    probe: function() {
+        return selectedProbe();
     }
 });
 
@@ -25,7 +29,7 @@ Template.toggleBlocks.events({
     },
     'change .disabledProbes': function(e, template) {
         Session.set('admin_probe', e.target.value);
-        template.find('.probes').selectedIndex = -1;
+        template.find('.activeProbes').selectedIndex = -1;
     },
     'click .block-one': function(e, template) {
         toggleBlockOne(template.find('.activeProbes'), true);
