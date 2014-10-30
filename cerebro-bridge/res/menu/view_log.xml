@@ -18,7 +18,7 @@
     <item
         android:id="@+id/menu_view_settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:orderInCategory="150"
+        android:orderInCategory="120"
         android:title="@string/settings"
         app:showAsAction="ifRoom"/>
     <item

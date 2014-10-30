@@ -33,8 +33,7 @@ public class App extends cerebro.lib.App {
 				currentChannel = prefs.getString(key, getString(R.string.pref_channel));
 				ParsePush.subscribeInBackground(currentChannel);
 			}
-		});
-		
+		});		
 		ParsePush.subscribeInBackground("id"+Utils.getDeviceId(this));
 	}
 
