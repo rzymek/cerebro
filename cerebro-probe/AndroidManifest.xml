@@ -52,6 +52,10 @@
             android:label="@string/title_activity_info" >
         </activity>
         <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/settings" >
+        </activity>
+        <activity
             android:name=".activities.ViewLogActivity"
             android:label="@string/title_activity_view_log" >
         </activity>

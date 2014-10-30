@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:key="@string/pref_server"
+        android:defaultValue="@string/pref_default_server"
+        android:summary="Adres serwera do którego przekazywać pozycję"
+        android:title="Serwer" />
+
+    <EditTextPreference
+        android:key="@string/pref_channel"
+        android:defaultValue="@string/pref_default_channel"
+        android:summary="Nazwa grupy powiązanych urządzeń"
+        android:title="Grupa" />
+
+</PreferenceScreen>

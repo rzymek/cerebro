@@ -1,8 +1,8 @@
-package cerebro.bridge.activities;
+package cerebro.probe.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import cerebro.bridge.R;
+import cerebro.probe.R;
 
 public class SettingsActivity extends PreferenceActivity {
 	

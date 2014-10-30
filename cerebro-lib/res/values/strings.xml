@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Cerebro</string>
+    <string name="settings">Ustawienia</string>
     <string name="pref_server">server</string>
     <string name="pref_default_server">http://cerebro.meteor.com</string>
     <string name="pref_enabled">enabled</string>

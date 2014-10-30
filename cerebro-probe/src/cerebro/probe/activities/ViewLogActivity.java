@@ -103,6 +103,9 @@ public class ViewLogActivity extends ActionBarActivity {
 		case R.id.action_export:
 			export();
 			break;
+		case R.id.action_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			break;
 		case R.id.action_reset:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Mortar");

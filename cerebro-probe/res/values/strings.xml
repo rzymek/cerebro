@@ -10,7 +10,10 @@
     <string name="report_location">Report Location</string>
     <string name="epicenter">Epicentrum</string>
     <string name="shutdown">Shutdown</string>
-    <string name="app_started">Mortar started</string>
+    <string name="app_started">Cerebro Probe started</string>
     <string name="reset_log">Reset log?</string>
-
+    
+    <string name="pref_channel">channel</string>
+    <string name="pref_default_channel">default</string>
+    
 </resources>

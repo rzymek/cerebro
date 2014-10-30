@@ -1,32 +1,25 @@
 package cerebro.probe.msg;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+import cerebro.lib.R;
 
 public class ConfigMsg implements ReceivedMessage {
+	public String server;
+	public String channel;
 
 	@Override
-	public void onReceive(Context context) {
-		/*
-		try {
-			SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
-			Editor edit = shared.edit();
-			for (Config key : Config.values()) {
-				if (key.type.equals(Integer.class)) {
-					edit.putInt(key.name(), (int) values.get(key));
-				} else if (key.type.equals(Boolean.class)) {
-					edit.putBoolean(key.name(), (boolean) values.get(key));
-				} else if (key.type.equals(String.class)) {
-					edit.putString(key.name(), (String) values.get(key));
-				} else {
-					throw new IllegalArgumentException("Unsupported type:" + key.type + " for " + key);
-				}
-			}
-			edit.commit();
-			((App) context).setupParse();
-			Utils.toast("Config received", context);
-		} catch (Exception ex) {
-			Utils.handle(ex, context);
+	public void onReceive(Context ctx) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+		Editor edit = prefs.edit();
+		if(server != null) {
+			edit.putString(ctx.getString(R.string.pref_server), server);
 		}
-		*/
+		if(channel != null) {
+			edit.putString(ctx.getString(cerebro.probe.R.string.pref_channel), channel);
+		}
+		edit.commit();
 	}
 }
