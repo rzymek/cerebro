@@ -12,14 +12,10 @@ isAdmin = function(userId) {
 if (Meteor.isServer) {
     Probes.allow({
         insert: function(userId, probe) {
-            probe.color = randomColor();
-            probe.blocked = true;
-            probe.timestamp_created = new Date();
-            probe.name = probe._id;
-            return true;
+            return false;
         },
-        update: function() {
-            return true;
+        update: function(userId) {
+            return isAdmin(userId);
         },
         remove: function(userId) {
             return isAdmin(userId);

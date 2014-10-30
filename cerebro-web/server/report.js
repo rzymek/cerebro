@@ -15,12 +15,17 @@ registerReport = function(data) {
         bridgeId: Match.Optional(String),
         timestamp_gps: Match.Optional(String)
     });
-    if(data.timestamp_gps)
+    if (data.timestamp_gps)
         data.timestamp_gps = new Date(data.timestamp_gps);
     data.timestamp_received = new Date();
-
     Probes.upsert(data.deviceId, {
-        $set: data
+        $set: data,
+        $setOnInsert: {
+            color: randomColor(),
+            blocked: true,
+            timestamp_created: new Date(),
+            name: data.deviceId
+        }
     });
     Tracks.insert({
         deviceId: data.deviceId,
@@ -36,8 +41,9 @@ WebApp.connectHandlers
         .use(connect.urlencoded())
         .use(connect.json())
         .use("/report", Meteor.bindEnvironment(function(req, res) {
-    console.log(req.body);
-    registerReport(req.body);
-    res.writeHead(200);
-    res.end('OK');
-}));
+            console.log(req.body);
+            registerReport(req.body);
+            console.log("done");
+            res.writeHead(200);
+            res.end('OK');
+        }));
