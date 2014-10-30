@@ -1,5 +1,5 @@
 Router.route('/', function() {
-    this.render('map');
+    this.render('map');    
 });
 
 Router.route('/adm', function() {
@@ -9,4 +9,15 @@ Router.route('/adm', function() {
 Router.route('/adm/list', function() {
     this.layout('adminLayout');
     this.render('toggleBlocksPage');
+});
+
+
+Router.onBeforeAction(function() {
+    if (!Meteor.userId()) {
+        this.render('map');
+    } else {
+        this.next();
+    }
+}, {
+    except: ['map']
 });
