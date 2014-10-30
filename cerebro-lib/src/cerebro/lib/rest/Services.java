@@ -23,6 +23,10 @@ public class Services {
 	public static CerebroService cerebro = createService();
 	private final static DateFormat iso8601Format = buildIso8601Format();
 
+	protected static void reload() {
+		cerebro = createService();
+	}
+	
 	private static DateFormat buildIso8601Format() {
 		DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 		iso8601Format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -58,8 +62,11 @@ public class Services {
 
 		}).create();
 
-		return new RestAdapter.Builder().setEndpoint("http://cerebro.meteor.com").setConverter(new GsonConverter(gson))
-				.build().create(CerebroService.class);
+		RestAdapter.Builder builder = new RestAdapter.Builder();
+//		builder.setEndpoint("http://cerebro.meteor.com");
+		builder.setEndpoint("http://host53.idzik.pl:3000");
+		builder.setConverter(new GsonConverter(gson));
+		return builder.build().create(CerebroService.class);
 	}
 
 }

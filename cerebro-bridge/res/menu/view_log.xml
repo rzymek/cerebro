@@ -16,12 +16,6 @@
         android:title="@string/shutdown"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_export"
-        android:icon="@android:drawable/ic_menu_share"
-        android:orderInCategory="120"
-        android:title="@string/export"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/action_reset"
         android:icon="@android:drawable/ic_menu_delete"
         android:orderInCategory="130"

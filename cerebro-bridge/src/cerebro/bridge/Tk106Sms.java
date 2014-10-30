@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.google.gson.Gson;
+
 public class Tk106Sms {
 	public Double lat;
 	public Double lon;
@@ -106,6 +108,11 @@ public class Tk106Sms {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

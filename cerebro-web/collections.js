@@ -15,6 +15,7 @@ if (Meteor.isServer) {
             probe.color = randomColor();
             probe.blocked = true;
             probe.timestamp_created = new Date();
+            probe.name = probe._id;
             return true;
         },
         update: function() {
