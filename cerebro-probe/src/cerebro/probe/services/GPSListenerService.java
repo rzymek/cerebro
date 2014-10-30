@@ -22,6 +22,7 @@ import android.telephony.TelephonyManager;
 import cerebro.lib.AbstractLocationListener;
 import cerebro.lib.SateliteListener;
 import cerebro.lib.Utils;
+import cerebro.lib.rest.CerebroService;
 import cerebro.lib.rest.Report;
 import cerebro.lib.rest.Services;
 import cerebro.probe.App;
@@ -65,13 +66,9 @@ public class GPSListenerService extends Service {
 				boolean sufficientlyAccurate = location.getAccuracy() <= MIN_ACCURACY;
 				boolean moreAccurate = lastReportLocation == null || location.getAccuracy() > lastReportLocation.getAccuracy();
 				boolean timeForNewReport = lastReport == null || lastReport.plusSeconds(request.checkIntervalSec).isBeforeNow();
-				logger.log(
-					(lastReportNotSufficientlyAccurate?"lastReportNotSufficientlyAccurate ":"#")+
-					(sufficientlyAccurate?"sufficientlyAccurate ":"#")+
-					(moreAccurate?"moreAccurate ":"#")+
-					(timeForNewReport?"timeForNewReport ":"#")+
-					""
-				);
+				logger.log((lastReportNotSufficientlyAccurate ? "lastReportNotSufficientlyAccurate " : "#")
+						+ (sufficientlyAccurate ? "sufficientlyAccurate " : "#") + (moreAccurate ? "moreAccurate " : "#")
+						+ (timeForNewReport ? "timeForNewReport " : "#") + "");
 				if (timeForNewReport || (lastReportNotSufficientlyAccurate && sufficientlyAccurate && moreAccurate)) {
 					reportLocation(location);
 				}
@@ -84,7 +81,7 @@ public class GPSListenerService extends Service {
 			}
 		}
 	};
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -105,7 +102,7 @@ public class GPSListenerService extends Service {
 	protected void reportLocation(final Location location) {
 		logger.log("reporting location: acc:" + location.getAccuracy());
 		lastReport = new DateTime();
-		
+
 		ParseObject report = new ParseObject("locrep");
 		report.put("lat", location.getLatitude());
 		report.put("lon", location.getLongitude());
@@ -113,26 +110,25 @@ public class GPSListenerService extends Service {
 		report.put("time", new Date(location.getTime()));
 		report.put("device", Utils.getDeviceId(this));
 		report.saveInBackground();
-		
-		new AsyncTask<Void, Void, String>() {
 
+		final CerebroService cerebro = Services.createService(this);
+		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... params) {
 				GPSListenerService ctx = GPSListenerService.this;
 				Report report = new Report();
 				report.deviceId = Utils.getDeviceId(ctx);
-				report.type = getApplicationInfo().packageName; 
+				report.type = getApplicationInfo().packageName;
 				report.location.lat = location.getLatitude();
 				report.location.lon = location.getLongitude();
 				report.number = getPhoneNumber();
 				report.speed = location.getSpeed();
 				report.accuracy = location.getAccuracy();
 				report.timestamp_gps = new Date(location.getTime());
-				return Services.cerebro.report(report, Utils.getUsername(ctx));
+				return cerebro.report(report, Utils.getUsername(ctx));
 			}
-
 		}.execute();
-		
+
 	}
 
 	protected String getPhoneNumber() {
@@ -147,7 +143,7 @@ public class GPSListenerService extends Service {
 		if (request != null) {
 			started = new DateTime();
 			lastReport = null;
-			logger.log("GPS service: "+request);
+			logger.log("GPS service: " + request);
 
 			gps.removeUpdates(gpsListener);
 			gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);

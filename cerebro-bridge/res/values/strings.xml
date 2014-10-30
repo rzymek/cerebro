@@ -3,7 +3,8 @@
 
     <string name="app_name">Cerebro Bridge</string>
     <string name="title_activity_view_log">Cerebro Bridge</string>
-    <string name="reset">Reset</string>
+    <string name="settings">Ustawienia</string>
+    <string name="reset">Clear</string>
     <string name="refresh">Refresh</string>
     <string name="export">Export</string>
     <string name="report_location">Report Location</string>

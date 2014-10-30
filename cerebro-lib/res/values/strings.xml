@@ -1,5 +1,9 @@
 <resources>
 
-    <string name="app_name">Mortar Lib</string>
-	<string name="action">org.mortar.sensor.MortarMessage</string>
+    <string name="app_name">Cerebro</string>
+    <string name="pref_server">server</string>
+    <string name="pref_default_server">http://cerebro.meteor.com</string>
+    <string name="pref_enabled">enabled</string>
+    <string name="pref_default_enabled">true</string>
+
 </resources>

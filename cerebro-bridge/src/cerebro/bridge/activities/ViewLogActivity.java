@@ -6,9 +6,12 @@ import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +30,9 @@ public class ViewLogActivity extends ActionBarActivity {
 		Thread.setDefaultUncaughtExceptionHandler((App) getApplication());
 		setContentView(R.layout.activity_view_log);
 		logger = ((App) getApplication()).logger;
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.edit().putBoolean(getString(R.string.pref_enabled), true).commit();
 	}
 
 	@Override
@@ -82,7 +88,12 @@ public class ViewLogActivity extends ActionBarActivity {
 			builder.create().show();
 			break;
 		case R.id.menu_view_quit:
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			prefs.edit().putBoolean(getString(R.string.pref_enabled), false).commit();
 			finish();
+			break;
+		case R.id.menu_view_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -10,6 +10,10 @@ import java.util.TimeZone;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import cerebro.lib.R;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,12 +24,35 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 public class Services {
-	public static CerebroService cerebro = createService();
-	private final static DateFormat iso8601Format = buildIso8601Format();
+	private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Date.class, new TypeAdapter<Date>() {
 
-	protected static void reload() {
-		cerebro = createService();
-	}
+		@Override
+		public synchronized Date read(JsonReader in) throws IOException {
+			if (in.peek() == JsonToken.NULL) {
+				in.nextNull();
+				return null;
+			}
+			String json = in.nextString();
+			try {
+				return ISO_8601.parse(json);
+			} catch (ParseException e) {
+				throw new JsonSyntaxException(json, e);
+			}
+		}
+
+		@Override
+		public synchronized void write(JsonWriter out, Date value) throws IOException {
+			if (value == null) {
+				out.nullValue();
+				return;
+			}
+			String dateFormatAsString = ISO_8601.format(value);
+			out.value(dateFormatAsString);
+		}
+
+	}).create();
+
+	private final static DateFormat ISO_8601 = buildIso8601Format();
 	
 	private static DateFormat buildIso8601Format() {
 		DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
@@ -33,39 +60,12 @@ public class Services {
 		return iso8601Format;
 	}
 
-	protected static CerebroService createService() {
-		Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new TypeAdapter<Date>() {
-
-			@Override
-			public synchronized Date read(JsonReader in) throws IOException {
-				if (in.peek() == JsonToken.NULL) {
-					in.nextNull();
-					return null;
-				}
-				String json = in.nextString();
-				try {
-					return iso8601Format.parse(json);
-				} catch (ParseException e) {
-					throw new JsonSyntaxException(json, e);
-				}
-			}
-
-			@Override
-			public synchronized void write(JsonWriter out, Date value) throws IOException {
-				if (value == null) {
-					out.nullValue();
-					return;
-				}
-				String dateFormatAsString = iso8601Format.format(value);
-				out.value(dateFormatAsString);
-			}
-
-		}).create();
-
+	public static CerebroService createService(Context ctx) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+		String endpoint = prefs.getString(ctx.getString(R.string.pref_server),ctx.getString(R.string.pref_default_server));
 		RestAdapter.Builder builder = new RestAdapter.Builder();
-//		builder.setEndpoint("http://cerebro.meteor.com");
-		builder.setEndpoint("http://host53.idzik.pl:3000");
-		builder.setConverter(new GsonConverter(gson));
+		builder.setEndpoint(endpoint);
+		builder.setConverter(new GsonConverter(GSON));
 		return builder.build().create(CerebroService.class);
 	}
 
