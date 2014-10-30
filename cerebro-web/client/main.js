@@ -10,6 +10,9 @@ getProbes = function(opt) {
 };
 
 Template.registerHelper('probes', getProbes);
+Template.registerHelper('equals', function(a,b){
+    return a === b;
+});
 Template.registerHelper('get', function(key){
     return Session.get(key);
 });

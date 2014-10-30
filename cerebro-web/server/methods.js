@@ -26,8 +26,8 @@ Meteor.methods({
     activate: function(probeId, interval, timespan) {
         check(Meteor.userId(), Match.Where(isAdmin));
         check(probeId, String);
-        check(interval, Integer);
-        check(timespan, Integer);
+        check(interval, Match.Integer);
+        check(timespan, Match.Integer);
         var probe = Probes.findOne(probeId);
         if (probe.type === 'cerebro.probe') {
             return HTTP.post('https://api.parse.com/1/push', {
@@ -36,7 +36,7 @@ Meteor.methods({
                     "X-Parse-REST-API-Key": Meteor.settings.parse.restKey
                 },
                 data: {
-                    channels: ["default"],
+                    channels: ["id"+probe._id],
                     data: {
                         type: "Activate",
                         gpsOnMinutes: timespan,

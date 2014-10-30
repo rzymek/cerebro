@@ -40,22 +40,22 @@ actions = {
     },
     "Aktywuj": function() {
         var setup = window.prompt("[Co ile minut],[Przez ile minut]", '3,30');
-        if(setup != null) {
+        if(setup !== null) {
             var regex = /([0-9]+),([0-9]+)/;
             var parsed = regex.exec(setup);
             if(!parsed) {
                 window.alert('Niepopranie wpisany setup. Spróbuj "3,30"');
             }
-            var interval = parsed[1];
-            var timespan = parsed[2];
+            var interval = parseInt(parsed[1]);
+            var timespan = parseInt(parsed[2]);
             Meteor.call('activate', this._id, interval, timespan);
         }
     }
-}
+};
 
 getActionKeys = function() {
     return _.keys(actions);
-}
+};
 Template.probeActions.helpers({
     actions: getActionKeys
 });
