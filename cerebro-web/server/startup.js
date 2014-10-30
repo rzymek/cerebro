@@ -1,7 +1,8 @@
 Meteor.startup(function() {
     check(Meteor.settings.smsapi, {
         user: String,
-        pass: String
+        pass: String,
+        test: Match.Optional(Boolean)
     });
     check(Meteor.settings.parse, {
         appId: String,
@@ -16,6 +17,6 @@ Accounts.validateNewUser(function(user) {
 });
 Meteor.users.allow({
     update: function(userId, doc, fieldNames){
-        return fieldNames.length === 1 && fieldNames[0] == 'settings';        
+        return fieldNames.length === 1 && fieldNames[0] == 'settings';
     }
 })
