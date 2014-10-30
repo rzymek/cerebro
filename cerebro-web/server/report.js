@@ -33,7 +33,8 @@ registerReport = function(data, name) {
         speed: data.speed,
         accuracy: data.accuracy,
         battery: data.battery,
-        timestamp: data.timestamp_gps
+        timestamp: data.timestamp_received,
+        timestamp_gps: data.timestamp_gps
     });
 };
 

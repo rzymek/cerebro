@@ -1,0 +1,13 @@
+<template name="log">
+    <div class="row">
+        <div class="col-md-2">
+            {{> probeSelector}}
+        </div>
+        <div class="col-md-10">
+            {{#each trace}}
+            <div style="white-space: nowrap">{{json .}}</div>
+            {{/each}}
+        </div>
+    </div>
+
+</template>

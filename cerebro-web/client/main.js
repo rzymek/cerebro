@@ -10,9 +10,12 @@ getProbes = function(opt) {
 };
 
 Template.registerHelper('probes', getProbes);
-Template.registerHelper('equals', function(a,b){
+Template.registerHelper('equals', function(a, b) {
     return a === b;
 });
-Template.registerHelper('get', function(key){
+Template.registerHelper('json', function(o) {
+    return JSON.stringify(o);
+});
+Template.registerHelper('get', function(key) {
     return Session.get(key);
 });

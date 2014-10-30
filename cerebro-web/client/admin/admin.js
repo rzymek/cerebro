@@ -6,11 +6,12 @@ selectedProbe = function() {
 Template.admin.helpers({
     probe: selectedProbe
 });
-Template.admin.events({
+Template.probeSelector.events({
     'change .probes': function(e, template) {
         Session.set('admin_probe', e.target.value);
     }
 });
+
 Template.probeAdmin.helpers({
     actions: function() {
         return getActionKeys();
