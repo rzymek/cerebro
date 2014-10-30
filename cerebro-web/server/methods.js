@@ -1,4 +1,4 @@
-var sendSms = function(probeId, text) {
+var sendSMS = function(probeId, text) {
     check(Meteor.userId(), Match.Where(isAdmin));
     check(text, String);
     check(probeId, String);
@@ -22,7 +22,7 @@ var sendSms = function(probeId, text) {
 };
 
 Meteor.methods({
-    sendSms: sendSms,
+    sendSMS: sendSMS,
     activate: function(probeId, interval, timespan) {
         check(Meteor.userId(), Match.Where(isAdmin));
         check(probeId, String);
@@ -56,7 +56,7 @@ Meteor.methods({
                 var s = n.toString().substr(0,3);
                 return "000".substr(s.length)+s;
             };
-            sendSms(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval)))
+            sendSMS(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval))+'n')
         }
     }
 });
