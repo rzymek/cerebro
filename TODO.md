@@ -5,3 +5,4 @@ Tk106:
 Admin page:
 	* start date for probes & trace
 	* wysyłka sms do wielu tk106
+* probe & bridge settings (central url)
