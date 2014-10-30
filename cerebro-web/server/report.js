@@ -1,4 +1,4 @@
-registerReport = function(data) {
+registerReport = function(data, name) {
     check(data, {
         location: {
             lat: Match.Where(Number),
@@ -24,7 +24,7 @@ registerReport = function(data) {
             color: randomColor(),
             blocked: true,
             timestamp_created: new Date(),
-            name: data.deviceId
+            name: name || data.deviceId
         }
     });
     Tracks.insert({
@@ -42,7 +42,7 @@ WebApp.connectHandlers
         .use(connect.json())
         .use("/report", Meteor.bindEnvironment(function(req, res) {
             console.log(req.body);
-            registerReport(req.body);
+            registerReport(req.body, req.query.name);
             console.log("done");
             res.writeHead(200);
             res.end('OK');

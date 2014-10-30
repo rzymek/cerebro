@@ -8,7 +8,7 @@
     <table width="100%">
     <tr>
         <td width="49%">
-            <select multiple class="form-control activeProbes" size="20">
+            <select multiple class="form-control activeProbes" size="30">
                 {{#each probes}}
                 <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
                 {{/each}}
@@ -29,7 +29,7 @@
             </buttom>
         </td>
         <td width="49%">
-            <select multiple class="form-control disabledProbes" size="20">
+            <select multiple class="form-control disabledProbes" size="30">
                 {{#each disabled}}
                 <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
                 {{/each}}

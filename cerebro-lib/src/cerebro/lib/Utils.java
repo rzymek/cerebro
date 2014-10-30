@@ -3,8 +3,12 @@ package cerebro.lib;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -49,6 +53,7 @@ public class Utils {
 		ex.printStackTrace(pw);
 		return sw.toString();
 	}
+
 	public static String toString(Bundle bundle) {
 		StringBuilder buf = new StringBuilder();
 		Set<String> keys = bundle.keySet();
@@ -60,5 +65,26 @@ public class Utils {
 
 	public static String getDeviceId(Context context) {
 		return Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+	}
+
+	public static String getUsername(Context ctx) {
+		AccountManager manager = AccountManager.get(ctx);
+		Account[] accounts = manager.getAccountsByType("com.google");
+		List<String> possibleEmails = new LinkedList<String>();
+
+		for (Account account : accounts) {
+			possibleEmails.add(account.name);
+		}
+
+		if (!possibleEmails.isEmpty() && possibleEmails.get(0) != null) {
+			String email = possibleEmails.get(0);
+			String[] parts = email.split("@");
+			if (parts.length > 0 && parts[0] != null)
+				return parts[0];
+			else
+				return null;
+		} else {
+			return null;
+		}
 	}
 }

@@ -118,8 +118,9 @@ public class GPSListenerService extends Service {
 
 			@Override
 			protected String doInBackground(Void... params) {
+				GPSListenerService ctx = GPSListenerService.this;
 				Report report = new Report();
-				report.deviceId = Utils.getDeviceId(GPSListenerService.this);
+				report.deviceId = Utils.getDeviceId(ctx);
 				report.type = getApplicationInfo().packageName; 
 				report.location.lat = location.getLatitude();
 				report.location.lon = location.getLongitude();
@@ -127,7 +128,7 @@ public class GPSListenerService extends Service {
 				report.speed = location.getSpeed();
 				report.accuracy = location.getAccuracy();
 				report.timestamp_gps = new Date(location.getTime());
-				return Services.cerebro.report(report);
+				return Services.cerebro.report(report, Utils.getUsername(ctx));
 			}
 
 		}.execute();

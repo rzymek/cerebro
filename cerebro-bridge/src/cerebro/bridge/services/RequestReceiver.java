@@ -61,7 +61,7 @@ public class RequestReceiver extends BroadcastReceiver {
 								
 								report.bridgeId = Utils.getDeviceId(context);
 								
-								return Services.cerebro.report(report);
+								return Services.cerebro.report(report, tk.imei);
 							} catch (Exception ex) {
 								Log.e("TK", "report", ex);
 								logger.log(ex.toString());

@@ -1,28 +1,33 @@
+var sendSms = function(probeId, text) {
+    check(Meteor.userId(), Match.Where(isAdmin));
+    check(text, String);
+    check(probeId, String);
+    check(text, Match.Where(function(x) {
+        return x.length < 100;
+    }));
+    var probe = Probes.findOne(probeId);
+    check(probe, Match.ObjectIncluding({number: String}));
+    console.log(probe.number + " <<< " + text);
+    return HTTP.post('https://ssl.smsapi.pl/sms.do', {
+        params: {
+            username: Meteor.settings.smsapi.user,
+            password: Meteor.settings.smsapi.pass,
+            to: probe.number,
+            message: text,
+            nounicode: 1,
+            max_parts: 1,
+            test: Meteor.settings.smsapi.test ? 1 : 0
+        }
+    });
+};
+
 Meteor.methods({
-    sendSms: function(probeId, text) {
+    sendSms: sendSms,
+    activate: function(probeId, interval, timespan) {
         check(Meteor.userId(), Match.Where(isAdmin));
-        check(text, String);
         check(probeId, String);
-        check(text, Match.Where(function(x) {
-            return x.length < 100;
-        }));
-        var probe = Probes.findOne(probeId);
-        check(probe, Match.ObjectIncluding({number: String}));
-        console.log(probe.number + " <<< " + text);
-        return HTTP.post('https://ssl.smsapi.pl/sms.do', {
-            params: {
-                username: Meteor.settings.smsapi.user,
-                password: Meteor.settings.smsapi.pass,
-                to: probe.number,
-                message: text,
-                nounicode: 1,
-                max_parts: 1,
-                test: Meteor.settings.smsapi.test ? 1 : 0
-            }
-        });
-    },
-    activate: function(probeId) {
-        check(probeId, String);
+        check(interval, Integer);
+        check(timespan, Integer);
         var probe = Probes.findOne(probeId);
         if (probe.type === 'cerebro.probe') {
             return HTTP.post('https://api.parse.com/1/push', {
@@ -34,15 +39,24 @@ Meteor.methods({
                     channels: ["default"],
                     data: {
                         type: "Activate",
-                        gpsOnMinutes: 30,
-                        checkIntervalSec: 60
+                        gpsOnMinutes: timespan,
+                        checkIntervalSec: interval
                     }
                 }
             });
-        } else if (probe.type === 'cerebro.bridge') {
-            
-        } else if (probe.type === 'tk106.gprs') {
-
+        } else if (probe.type === 'cerebro.bridge' || probe.type === 'tk106.gprs') {
+            if (!probe.number) {
+                throw new Meteor.error('no-number', "Brak numeru do wysłania konfiguracji SMS");
+            }
+            var fill = function(n) {
+                if(s > 999)
+                    return "999";
+                if(s < 0)
+                    return "000";
+                var s = n.toString().substr(0,3);
+                return "000".substr(s.length)+s;
+            };
+            sendSms(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval)))
         }
     }
 });

@@ -39,7 +39,17 @@ actions = {
         }
     },
     "Aktywuj": function() {
-        Meteor.call('activate', this._id);
+        var setup = window.prompt("[Co ile minut],[Przez ile minut]", '3,30');
+        if(setup != null) {
+            var regex = /([0-9]+),([0-9]+)/;
+            var parsed = regex.exec(setup);
+            if(!parsed) {
+                window.alert('Niepopranie wpisany setup. Spróbuj "3,30"');
+            }
+            var interval = parsed[1];
+            var timespan = parsed[2];
+            Meteor.call('activate', this._id, interval, timespan);
+        }
     }
 }
 
