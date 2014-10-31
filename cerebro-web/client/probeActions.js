@@ -48,9 +48,17 @@ actions = {
             }
             var interval = parseInt(parsed[1]);
             var timespan = parseInt(parsed[2]);
-            var name = this.name;
+            var probe = this;
             Meteor.call('activate', this._id, interval, timespan, function(error, result){
+                var end = moment().add(timespan,'minutes');
+                var prefix = moment().isBefore(end) ? "[Aktywny]" : "[Uśpiony]"
+                Probes.update(probe._id, {
+                    $set: {
+                        activation: prefix+" Co "+interval+"min do "+end.format("H:mm (DD.MM.YYYY)")
+                    }
+                })
                 alert("Aktywacja "+name+": "+JSON.stringify(error || result));
+                
             });
         }
     }

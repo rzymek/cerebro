@@ -146,7 +146,9 @@ public class GPSListenerService extends Service {
 			logger.log("GPS service: " + request);
 
 			gps.removeUpdates(gpsListener);
-			gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
+			if(request.gpsOnMinutes != 0) {
+				gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
+			}
 		}
 		startForeground(NOTIFIFACTION_ID, createNotification());
 		return START_NOT_STICKY;
