@@ -18,7 +18,7 @@ var sendSMS = function(probeId, text) {
             max_parts: 1,
             test: Meteor.settings.smsapi.test ? 1 : 0
         }
-    });
+    }).content;
 };
 
 Meteor.methods({
@@ -43,7 +43,7 @@ Meteor.methods({
                         gpsOnMinutes: timespan
                     }
                 }
-            });
+            }).content;
         } else if (probe.type === 'cerebro.bridge' || probe.type === 'tk106.gprs') {
             if (!probe.number) {
                 throw new Meteor.error('no-number', "Brak numeru do wysłania konfiguracji SMS");
