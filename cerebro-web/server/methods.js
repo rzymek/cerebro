@@ -39,8 +39,8 @@ Meteor.methods({
                     channels: ["id"+probe._id],
                     data: {
                         type: "Activate",
-                        gpsOnMinutes: timespan,
-                        checkIntervalSec: interval
+                        checkIntervalSec: interval * 60,
+                        gpsOnMinutes: timespan
                     }
                 }
             });
