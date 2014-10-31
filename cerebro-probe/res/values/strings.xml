@@ -4,7 +4,7 @@
     <string name="app_name">Cerebro Probe</string>
     <string name="title_activity_info">Cerebro Info</string>
     <string name="title_activity_view_log">Cerebro Probe</string>
-    <string name="reset">Reset</string>
+    <string name="reset">Clear</string>
     <string name="refresh">Refresh</string>
     <string name="export">Export</string>
     <string name="report_location">Report Location</string>
@@ -15,5 +15,6 @@
     
     <string name="pref_channel">channel</string>
     <string name="pref_default_channel">default</string>
+    <string name="show_log">Log</string>
     
 </resources>

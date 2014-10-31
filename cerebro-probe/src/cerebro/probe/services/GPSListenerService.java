@@ -29,7 +29,7 @@ import cerebro.probe.App;
 import cerebro.probe.Logger;
 import cerebro.probe.R;
 import cerebro.probe.activities.LuncherActivity;
-import cerebro.probe.activities.ViewLogActivity;
+import cerebro.probe.activities.SettingsActivity;
 import cerebro.probe.msg.Activate;
 import cerebro.probe.utils.GPSUtils;
 
@@ -153,7 +153,7 @@ public class GPSListenerService extends Service {
 	}
 
 	private Notification createNotification(CharSequence title, CharSequence msg) {
-		Intent resultIntent = new Intent(this, ViewLogActivity.class);
+		Intent resultIntent = new Intent(this, SettingsActivity.class);
 		resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 		/*

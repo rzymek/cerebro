@@ -10,6 +10,7 @@ import cerebro.lib.Utils;
 import cerebro.probe.App;
 import cerebro.probe.R;
 import cerebro.probe.services.GPSListenerService;
+import cerebro.probe.utils.GPSUtils;
 
 public class LuncherActivity extends Activity {
 	public static final String EXTRA_EXIT = "exit";
@@ -38,10 +39,12 @@ public class LuncherActivity extends Activity {
 				}
 			});
 			builder.create().show();
-		} else {			
+		} else {
+			if(GPSUtils.ensureGpsOn(this)){
+				finish();				
+			}
 			startService(new Intent(this, GPSListenerService.class));
 			Utils.toast(getString(R.string.app_started), this);
-			finish();
 		}
 	}
 }

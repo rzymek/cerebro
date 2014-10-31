@@ -27,6 +27,12 @@ Template.toggleBlocks.events({
         Session.set('admin_probe', e.target.value);
         template.find('.disabledProbes').selectedIndex = -1;
     },
+    'dblclick .activeProbes': function(e, template) {
+        toggleBlockOne(template.find('.activeProbes'), true);
+    },
+    'dblclick .disabledProbes': function(e, template) {
+        toggleBlockOne(template.find('.disabledProbes'), false);
+    },
     'change .disabledProbes': function(e, template) {
         Session.set('admin_probe', e.target.value);
         template.find('.activeProbes').selectedIndex = -1;

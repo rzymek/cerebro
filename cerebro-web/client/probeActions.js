@@ -48,7 +48,10 @@ actions = {
             }
             var interval = parseInt(parsed[1]);
             var timespan = parseInt(parsed[2]);
-            Meteor.call('activate', this._id, interval, timespan);
+            var name = this.name;
+            Meteor.call('activate', this._id, interval, timespan, function(error, result){
+                alert("Aktywacja "+name+": "+JSON.stringify(error || result));
+            });
         }
     }
 };

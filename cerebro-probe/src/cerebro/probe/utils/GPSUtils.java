@@ -1,9 +1,22 @@
 package cerebro.probe.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
+import android.provider.Settings;
 
 public class GPSUtils {
-
+	public static boolean ensureGpsOn(Context ctx) {
+		LocationManager service = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
+		if (!service.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			GoToSettingsDialog.show(ctx, "GPS", "GPS musi być włączony. Otworzyć ustawnienia?", intent);
+			return false;
+		}else{
+			return true;
+		}
+	}
 	/**
 	 * Determines whether one Location reading is better than the current
 	 * Location fix

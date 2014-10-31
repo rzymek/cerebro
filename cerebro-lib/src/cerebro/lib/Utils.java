@@ -17,7 +17,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class Utils {
-
 	public static String toUTF8(byte[] userData) {
 		try {
 			return new String(userData, "utf-8");
@@ -41,9 +40,8 @@ public class Utils {
 
 	@SuppressLint("DefaultLocale")
 	public static String getSystemInfo() {
-		return String.format("Android %s-%s (SDK: %d), kernel %s\n%s %s %s (%s)[%s]",
-				android.os.Build.VERSION.CODENAME, android.os.Build.VERSION.RELEASE, android.os.Build.VERSION.SDK_INT,
-				System.getProperty("os.version"), android.os.Build.MANUFACTURER, android.os.Build.BRAND,
+		return String.format("Android %s-%s (SDK: %d), kernel %s\n%s %s %s (%s)[%s]", android.os.Build.VERSION.CODENAME, android.os.Build.VERSION.RELEASE,
+				android.os.Build.VERSION.SDK_INT, System.getProperty("os.version"), android.os.Build.MANUFACTURER, android.os.Build.BRAND,
 				android.os.Build.MODEL, android.os.Build.PRODUCT, android.os.Build.HARDWARE);
 	}
 

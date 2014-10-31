@@ -56,7 +56,7 @@ Meteor.methods({
                 var s = n.toString().substr(0,3);
                 return "000".substr(s.length)+s;
             };
-            sendSMS(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval))+'n')
+            return sendSMS(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval))+'n');
         }
     }
 });
