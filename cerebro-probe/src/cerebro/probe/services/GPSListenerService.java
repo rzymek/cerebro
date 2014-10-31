@@ -148,11 +148,11 @@ public class GPSListenerService extends Service {
 			gps.removeUpdates(gpsListener);
 			gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
 		}
-		startForeground(NOTIFIFACTION_ID, createNotification(null, null));
+		startForeground(NOTIFIFACTION_ID, createNotification());
 		return START_NOT_STICKY;
 	}
 
-	private Notification createNotification(CharSequence title, CharSequence msg) {
+	private Notification createNotification() {
 		Intent resultIntent = new Intent(this, SettingsActivity.class);
 		resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -172,9 +172,7 @@ public class GPSListenerService extends Service {
 		builder.setContentIntent(resultPendingIntent);
 		builder.setSmallIcon(R.drawable.ic_launcher);
 		builder.setContentTitle(getString(R.string.app_name));
-		if (msg != null) {
-			builder.setContentText(msg);
-		}
+		builder.setContentText(Utils.getDeviceId(this));
 
 		Notification notification = builder.build();
 		notification.flags |= Notification.FLAG_NO_CLEAR;
