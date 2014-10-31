@@ -18,7 +18,7 @@ var sendSMS = function(probeId, text) {
             max_parts: 1,
             test: Meteor.settings.smsapi.test ? 1 : 0
         }
-    }).content;
+    });
 };
 
 Meteor.methods({
@@ -56,7 +56,7 @@ Meteor.methods({
                 var s = n.toString().substr(0,3);
                 return "000".substr(s.length)+s;
             };
-            return sendSMS(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval))+'n');
+            return sendSMS(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval))+'n').content;
         }
     }
 });
