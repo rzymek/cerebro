@@ -35,6 +35,15 @@ Template.settings.helpers({
         return settings[key];
     }
 });
+
+Template.settings.rendered = function() {
+    this.$('.datetimepicker').datetimepicker({
+        minuteStepping:15,
+        language: 'en',
+        sideBySide: true
+    });
+};
+
 Template.settings.events({
     'submit form': function(e) {
         e.preventDefault();

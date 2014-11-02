@@ -1,3 +1,4 @@
+
 track = null;
 var showingTrackOf = null;
 var handle = null;
@@ -21,7 +22,7 @@ showTrack = function(id) {
         if (latlngs.length === 0)
             return;
         track = L.polyline(latlngs, {
-            color: 'red',//Probes.findOne(id).color,
+            color: 'red', //Probes.findOne(id).color,
             opacity: 0.5
         }).addTo(map);
         map.fitBounds(track);
@@ -29,12 +30,12 @@ showTrack = function(id) {
     showingTrackOf = id;
 };
 /*
-
+ 
  echo 'db.probes.remove();db.tracks.remove()'|meteor mongo
-
+ 
  curl -d hello 'http://localhost:3000/rep?name=imei:359585014548124&lat=52.22&lon=21.0'
-
+ 
  cat ../cerebro-web-test/log |while read line;do echo "$line";echo "$line"| telnet localhost 5000;done
-
-
+ 
+ 
  */

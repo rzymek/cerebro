@@ -8,7 +8,8 @@ Template.log.helpers({
             return null;
         Meteor.subscribe("tracks", probeId);
         return Tracks.find({}, {
-            sort: {timestamp: 1}
+            sort: {timestamp: -1},
+            limit: 5000
         });
     }
 });
