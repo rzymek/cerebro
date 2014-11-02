@@ -29,7 +29,7 @@ Template.probeAdmin.events({
 
 Template.settings.helpers({
     'fetch': function(key) {
-        if(!Meteor.user())
+        if (!Meteor.user())
             return null;
         var settings = Meteor.user().settings || {};
         return settings[key];
@@ -38,14 +38,14 @@ Template.settings.helpers({
 
 Template.settings.rendered = function() {
     this.$('.datetimepicker').datetimepicker({
-        minuteStepping:15,
+        minuteStepping: 15,
         language: 'en',
         sideBySide: true
     });
 };
 
 Template.settings.events({
-    'submit form': function(e) {
+    'submit form': function(e, t) {
         e.preventDefault();
         var settings = $(e.target).serializeArray().reduce(function(a, b) {
             a[b.name] = b.value;
@@ -53,6 +53,10 @@ Template.settings.events({
         }, {});
         Meteor.users.update(Meteor.userId(), {
             $set: {settings: settings}
+        });
+        var alert = t.$('.alert');
+        alert.fadeIn('fast', function() {
+            alert.fadeOut('slow');
         });
     }
 });

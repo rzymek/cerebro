@@ -1,15 +1,14 @@
 Probes = new Mongo.Collection('probes');
 Tracks = new Mongo.Collection('tracks');
 
-
-getTimestampQuery = function(user) {
-    if (user && user.settings && user.settings.startDate) {
-        return     {
-            timestamp: {$gt: new Date(Meteor.user().settings.startDate)}
-        };
-    } else {
-        return {};
+timestampQuery = function(query, user) {
+    if (user === undefined) {
+        user = Meteor.user();
     }
+    if (user && user.settings && user.settings.startDate) {
+        query.timestamp = {$gt: new Date(user.settings.startDate)};
+    }
+    return query;
 };
 
 isAdmin = function(userId) {
@@ -53,9 +52,9 @@ if (Meteor.isServer) {
     Meteor.publish('tracks', function(id) {
         if (isAdmin(this.userId)) {
             var user = Meteor.users.findOne(this.userId);
-            var q = getTimestampQuery(user);
-            q.deviceId = id;
-            return Tracks.find(q); 
+            return Tracks.find(timestampQuery({
+                deviceId: id
+            }, user));
         }
     });
 }
