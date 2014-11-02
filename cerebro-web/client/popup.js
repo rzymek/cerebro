@@ -14,3 +14,35 @@ Template.probeSMS.events({
         send('sendSMS', this._id, e);
     }
 });
+
+active = function(act) {
+    if (act && act.when) {
+        var until = moment(act.when).add(act.timespan, 'minutes');
+        return until.isAfter(/*now*/);
+    } else {
+        return false;
+    }
+};
+
+Template.activation.helpers({
+    message: function() {
+        Session.get('minutes'); //refresh every minute
+        var act = this;
+        if (act && act.when) {
+            var until = moment(act.when).add(act.timespan, 'minutes');
+            var msg = 'Co ' + act.interval + 'min do ' + until.format('HH:mm (DD.MM.YYYY)') + '. ';
+            var left = until.diff(moment(), 'minutes');
+            if (left >= 0) {
+                msg += 'Zostało ' + left + 'min.';
+            } else {
+                msg += 'Nieaktywny.';
+            }
+            return msg;
+        } else {
+            return 'Nie aktywowany tutaj.';
+        }
+    },
+    class: function() {
+        return active(this) ? 'active' : 'inactive';
+    }
+});

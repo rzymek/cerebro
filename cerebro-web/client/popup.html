@@ -14,8 +14,12 @@
         <tr><th>Dokładność: </th><td>{{accuracy}}</td></tr>
         <tr><th>Bateria: </th><td>{{battery}}</td></tr>
         <tr><th>Zasięg: </th><td>{{signal}}</td></tr>
-        <tr><th>Aktywność: </th><td>{{activation}}</td></tr>
+        <tr><th>Aktywność: </th><td>{{>activation activation}}</td></tr>
     </table>
+</template>
+
+<template name="activation">
+    <div class="{{class}}">{{message}}</div>
 </template>
 
 <template name="probeActions">

@@ -29,34 +29,45 @@ Meteor.methods({
         check(interval, Match.Integer);
         check(timespan, Match.Integer);
         var probe = Probes.findOne(probeId);
+        var result;
         if (probe.type === 'cerebro.probe') {
-            return HTTP.post('https://api.parse.com/1/push', {
+            result = HTTP.post('https://api.parse.com/1/push', {
                 headers: {
                     "X-Parse-Application-Id": Meteor.settings.parse.appId,
                     "X-Parse-REST-API-Key": Meteor.settings.parse.restKey
                 },
                 data: {
-                    channels: ["id"+probe._id],
+                    channels: ["id" + probe._id],
                     data: {
                         type: "Activate",
                         checkIntervalSec: interval * 60,
                         gpsOnMinutes: timespan
                     }
                 }
-            }).content;
+            });
         } else if (probe.type === 'cerebro.bridge' || probe.type === 'tk106.gprs') {
             if (!probe.number) {
                 throw new Meteor.error('no-number', "Brak numeru do wysłania konfiguracji SMS");
             }
             var fill = function(n) {
-                if(s > 999)
+                if (s > 999)
                     return "999";
-                if(s < 0)
+                if (s < 0)
                     return "000";
-                var s = n.toString().substr(0,3);
-                return "000".substr(s.length)+s;
+                var s = n.toString().substr(0, 3);
+                return "000".substr(s.length) + s;
             };
-            return sendSMS(probeId, "123456t"+fill(interval)+'m'+fill(Math.round(timespan/interval))+'n').content;
+            result = sendSMS(probeId, "123456t" + fill(interval) + 'm' + fill(Math.round(timespan / interval)) + 'n');
         }
+        Probes.update(probeId, {
+            $set: {
+                activation: {
+                    when: new Date(),
+                    interval: interval,
+                    timespan: timespan
+                }
+            }
+        });
+        return result.content;
     }
 });

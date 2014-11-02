@@ -25,3 +25,12 @@ html, body, #map {
 .disabledProbes {
     background-color: #fdd
 }
+.active,.inactive{
+    font-weight: bold;
+}
+.active {
+    color: green;
+}
+.inactive {
+    color: lightgray;
+}
