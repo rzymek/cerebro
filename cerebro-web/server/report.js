@@ -1,3 +1,11 @@
+var blockByDefault = function() {
+    var admin = Meteor.users.findOne({"emails.address": 'rzymek@gmail.com'});
+    console.log("blockByDefault ", admin,admin.settings,admin.settings.blockByDefault);
+    var result = (admin && admin.settings && admin.settings.blockByDefault) ? true : false;
+    console.log("blockByDefault="+result, admin,admin.settings,admin.settings.blockByDefault);
+    return result;
+};
+
 registerReport = function(data, name) {
     console.log(name, data);
     check(data, {
@@ -24,7 +32,7 @@ registerReport = function(data, name) {
         $set: data,
         $setOnInsert: {
             color: randomColor(),
-            blocked: true,
+            blocked: blockByDefault(),
             timestamp_created: new Date(),
             name: name || data.deviceId
         }

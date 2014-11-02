@@ -43,6 +43,11 @@
         <div class="panel-heading">Ustawnienia ogólne</div>
         <div class="panel-body">
             <form role="form" class="settings">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="blockByDefault" checked="{{fetch 'blockByDefault'}}"> Blokuj nowe urządzenia
+                    </label>
+                </div>
                 <div class="form-group">
                     <label for="mapUrl">Dostawca mapy</label><br>
                     <i>
@@ -50,11 +55,11 @@
                         http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png<br>
                         http://{s}.tiles.mapbox.com/v3/rzymek.k3dehan2/{z}/{x}/{y}.png<br>
                     </i>
-                    <input name="mapUrl" type="text" class="form-control" value="{{fetch 'mapUrl'}}">
+                    <input id="mapUrl" name="mapUrl" type="text" class="form-control" value="{{fetch 'mapUrl'}}">
                 </div>
                 <div class="form-group">
                     <label for="startDate">Data startowa</label>
-                    <input name="startDate" type="datetime-local" class="form-control" value="{{fetch 'startDate'}}">
+                    <input id="startDate" name="startDate" type="datetime-local" class="form-control" value="{{fetch 'startDate'}}">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
