@@ -1,9 +1,6 @@
 var blockByDefault = function() {
     var admin = Meteor.users.findOne({"emails.address": 'rzymek@gmail.com'});
-    console.log("blockByDefault ", admin,admin.settings,admin.settings.blockByDefault);
-    var result = (admin && admin.settings && admin.settings.blockByDefault) ? true : false;
-    console.log("blockByDefault="+result, admin,admin.settings,admin.settings.blockByDefault);
-    return result;
+    return (admin && admin.settings && admin.settings.blockByDefault) ? true : false;
 };
 
 registerReport = function(data, name) {
