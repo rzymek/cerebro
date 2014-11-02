@@ -1,8 +1,9 @@
 registerReport = function(data, name) {
+    console.log(name, data);
     check(data, {
         location: {
-            lat: Match.Where(Number),
-            lon: Match.Where(Number)
+            lat: Number,
+            lon: Number
         },
         deviceId: String,
         type: String,
@@ -15,8 +16,9 @@ registerReport = function(data, name) {
         bridgeId: Match.Optional(String),
         timestamp_gps: Match.Optional(String)
     });
-    if (data.timestamp_gps)
+    if (data.timestamp_gps) {
         data.timestamp_gps = new Date(data.timestamp_gps);
+    }
     data.timestamp_received = new Date();
     Probes.upsert(data.deviceId, {
         $set: data,
@@ -42,9 +44,39 @@ WebApp.connectHandlers
         .use(connect.urlencoded())
         .use(connect.json())
         .use("/report", Meteor.bindEnvironment(function(req, res) {
-            console.log(req.body);
-            registerReport(req.body, req.query.name);
+            try {
+                registerReport(req.body, req.query.name);
+                res.writeHead(200);
+                res.write('OK');
+            }catch(e){
+                res.writeHead(500);
+                res.write('ERROR: '+e.message);
+                throw e;
+            } finally {
+                res.end();
+            }
             console.log("done");
-            res.writeHead(200);
-            res.end('OK');
         }));
+WebApp.connectHandlers
+        .use('/get', Meteor.bindEnvironment(function(req, res) {
+            try {
+                var name = req.query.name;
+                req.query.location = {
+                    lat: parseFloat(req.query.lat),
+                    lon: parseFloat(req.query.lon)
+                };
+                delete req.query.lat;
+                delete req.query.lon;
+                delete req.query.name;
+                registerReport(req.query, name);
+                res.writeHead(200);
+                res.write('OK');
+            }catch(e){
+                res.writeHead(500);
+                res.write('ERROR: '+e.message);
+                throw e;
+            } finally {
+                res.end();
+            }
+        }));
+
