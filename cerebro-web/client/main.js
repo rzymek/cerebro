@@ -1,5 +1,12 @@
 Meteor.startup(function() {
-    Meteor.subscribe("probes");
+    Tracker.autorun(function() {
+        var user = Meteor.user();
+        if (user) {
+            Meteor.subscribe("probes", user.settings
+                    /* Force resubscription by providing a parameter. 
+                     * It is accutally unused on the server*/);
+        }
+    });
     Meteor.subscribe("settings");
 });
 

@@ -29,7 +29,7 @@ registerReport = function(data, name) {
     if (data.timestamp_gps) {
         data.timestamp_gps = new Date(data.timestamp_gps);
     }
-    data.timestamp_received = new Date();
+    data.timestamp = new Date();
     Probes.upsert(data.deviceId, {
         $set: data,
         $setOnInsert: {

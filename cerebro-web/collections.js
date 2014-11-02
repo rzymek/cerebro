@@ -31,12 +31,13 @@ if (Meteor.isServer) {
             return isAdmin(userId);
         }
     });
-
     Meteor.publish('probes', function() {
         if (isAdmin(this.userId)) {
-            return Probes.find();
+            var user = Meteor.users.findOne(this.userId);
+            return Probes.find(timestampQuery({}, user));
         }
     });
+    
     Meteor.publish('settings', function() {
         if (this.userId) {
             return Meteor.users.find({
