@@ -73,7 +73,7 @@ public class RequestReceiver extends BroadcastReceiver {
 								return cerebro.report(report, tk.imei);
 							} catch (Exception ex) {
 								Log.e("TK", "report", ex);
-								logger.log(ex.toString());
+								logger.log(Utils.getStackString(ex));
 							}
 							try {
 								Thread.sleep(1000);
