@@ -3,8 +3,13 @@ package cerebro.probe.services;
 import static android.location.LocationManager.GPS_PROVIDER;
 
 import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -44,6 +49,8 @@ public class GPSListenerService extends Service {
 
 	protected static final float MIN_ACCURACY = 50;
 
+	protected static final int GPS_AVERAGE_AQUIRE_SEC = 120;
+
 	private LocationManager gps;
 
 	private SateliteListener sateliteListener;
@@ -57,26 +64,45 @@ public class GPSListenerService extends Service {
 	private DateTime lastReport = null;
 	private Location lastReportLocation;
 
+	protected ScheduledFuture<?> scheduled = null;
+		
 	private LocationListener gpsListener = new AbstractLocationListener() {
+		private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
 		@Override
 		public void onLocationChanged(Location location) {
-			boolean lastReportNotSufficientlyAccurate = lastReportLocation == null || lastReportLocation.getAccuracy() > MIN_ACCURACY;
+			boolean lastReportNotSufficientlyAccurate = lastReportLocation == null
+					|| lastReportLocation.getAccuracy() > MIN_ACCURACY;
 			if (GPSUtils.isBetterLocation(location, lastReportLocation)) {
 				boolean sufficientlyAccurate = location.getAccuracy() <= MIN_ACCURACY;
-				boolean moreAccurate = lastReportLocation == null || location.getAccuracy() > lastReportLocation.getAccuracy();
-				boolean timeForNewReport = lastReport == null || lastReport.plusSeconds(request.checkIntervalSec).isBeforeNow();
-				logger.log((lastReportNotSufficientlyAccurate ? "lastReportNotSufficientlyAccurate " : "#")
-						+ (sufficientlyAccurate ? "sufficientlyAccurate " : "#") + (moreAccurate ? "moreAccurate " : "#")
-						+ (timeForNewReport ? "timeForNewReport " : "#") + "");
+				boolean moreAccurate = lastReportLocation == null
+						|| location.getAccuracy() > lastReportLocation.getAccuracy();
+				boolean timeForNewReport = lastReport == null
+						|| lastReport.plusSeconds(request.checkIntervalSec).isBeforeNow();
+				//	logger.log((lastReportNotSufficientlyAccurate ? "lastReportNotSufficientlyAccurate " : "#")
+				//		+ (sufficientlyAccurate ? "sufficientlyAccurate " : "#") + (moreAccurate ? "moreAccurate " : "#")
+				//		+ (timeForNewReport ? "timeForNewReport " : "#") + "");
 				if (timeForNewReport || (lastReportNotSufficientlyAccurate && sufficientlyAccurate && moreAccurate)) {
 					reportLocation(location);
+					int secondsTillNextReport = lastReport == null 
+							? request.checkIntervalSec 
+							: new Period(lastReport.plusSeconds(request.checkIntervalSec), new DateTime()).getSeconds();//TODO
+					if (secondsTillNextReport > GPS_AVERAGE_AQUIRE_SEC) {
+						cancelGps();
+						scheduled = scheduler.schedule(new Runnable() {						
+							@Override
+							public void run() {
+								gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
+							}
+						}, secondsTillNextReport, TimeUnit.SECONDS);
+					}
 				}
 				lastReportLocation = location;
 				logger.put(location);
 				lastReportNotSufficientlyAccurate = !sufficientlyAccurate;
 			}
-			if (!lastReportNotSufficientlyAccurate && lastReport != null && started.plusMinutes(request.gpsOnMinutes).isBeforeNow()) {
+			if (!lastReportNotSufficientlyAccurate && lastReport != null
+					&& started.plusMinutes(request.gpsOnMinutes).isBeforeNow()) {
 				stopGps();
 			}
 		}
@@ -97,6 +123,13 @@ public class GPSListenerService extends Service {
 			}
 		};
 		logger.log("listener created\n" + Utils.getSystemInfo());
+	}
+
+	protected void cancelGps() {
+		if(scheduled != null) {
+			scheduled.cancel(false);
+		}
+		gps.removeUpdates(gpsListener);
 	}
 
 	protected void reportLocation(final Location location) {
@@ -144,9 +177,8 @@ public class GPSListenerService extends Service {
 			started = new DateTime();
 			lastReport = null;
 			logger.log("GPS service: " + request);
-
-			gps.removeUpdates(gpsListener);
-			if(request.gpsOnMinutes != 0) {
+			cancelGps();
+			if (request.gpsOnMinutes != 0) {
 				gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
 			}
 		}
