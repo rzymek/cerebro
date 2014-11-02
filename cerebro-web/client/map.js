@@ -4,7 +4,7 @@ function createIcon(probe) {
         opacity: 1,
         fillColor: probe.color,
         color: active(probe.activation) ? '#0a0' : '#333',
-        weight: 2,
+        weight: 2
     };
 }
 
@@ -15,7 +15,7 @@ Template.map.rendered = function() {
     });
     L.Icon.Default.imagePath = 'packages/boustanihani_meteor-leaflet/images';
 
-    var url = 'http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png'
+    var url = 'http://{s}.tiles.mapbox.com/v3/rzymek.k0pajp3i/{z}/{x}/{y}.png';
     if (Meteor.user() && Meteor.user().settings && Meteor.user().settings.mapUrl) {
         url = Meteor.user().settings.mapUrl;
     }
@@ -64,7 +64,7 @@ Template.map.rendered = function() {
 
 Meteor.setInterval(function() {
     Session.set('minutes', moment().minutes());
-    if(!markers){
+    if (!markers) {
         return;
     }
     _.pairs(markers).map(function(it) {
@@ -73,7 +73,9 @@ Meteor.setInterval(function() {
             marker: it[1]
         };
     }).forEach(function(entry) {
-        var icon = createIcon(Probes.findOne(entry.id,{reactive:false}));
+        var icon = createIcon(Probes.findOne(entry.id, {
+            reactive: false
+        }));
         entry.marker.setStyle(icon);
     });
-}, 60*1000);
+}, 60 * 1000);
