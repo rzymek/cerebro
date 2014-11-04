@@ -45,7 +45,7 @@ registerReport = function(data, name) {
         speed: data.speed,
         accuracy: data.accuracy,
         battery: data.battery,
-        timestamp: data.timestamp_received,
+        timestamp: data.timestamp,
         timestamp_gps: data.timestamp_gps
     });
 };

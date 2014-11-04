@@ -14,7 +14,14 @@ showTrack = function(id) {
         return;
     }
     handle = Meteor.subscribe("tracks", id, function(arg) {
-        var latlngs = Tracks.find({}, {
+        var latlngs = Tracks.find({
+            location: {
+                $ne: {
+                    lat: 0,
+                    lon: 0
+                }
+            }
+        }, {
             sort: {timestamp: 1}
         }).map(function(it) {
             return it.location;
