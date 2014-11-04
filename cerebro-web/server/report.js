@@ -65,13 +65,14 @@ WebApp.connectHandlers
             number: Match.Optional(String)
         });
         data.timestamp = new Date();
-        data.name = name;
+        data.username = name;
         Probes.upsert(data.deviceId, {
             $set: data,
             $setOnInsert: {
                 color: randomColor(),
                 blocked: blockByDefault(),
-                timestamp_created: new Date()
+                timestamp_created: new Date(),
+                name: name || data.deviceId
             }
         });
         res.writeHead(200);

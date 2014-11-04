@@ -9,6 +9,9 @@
 <template name="probeInfo">
     <table>
         <tr><th>Rodzaj: </th><td>{{type}}</td></tr>
+        {{#if username}} 
+        <tr><th>Username:</th><td>{{username}}</td></tr>
+        {{/if}}
         <tr><th>Aktualizacja: </th><td>{{date timestamp}} ({{since timestamp}}min temu)</td></tr>
         <tr><th>Prędkość: </th><td>{{speed}}</td></tr>
         <tr><th>Dokładność: </th><td>{{accuracy}}</td></tr>
