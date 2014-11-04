@@ -48,10 +48,6 @@
         <service android:name=".services.GPSListenerService" />
 
         <activity
-            android:name=".activities.InfoActivity"
-            android:label="@string/title_activity_info" >
-        </activity>
-        <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/settings" >
         </activity>
