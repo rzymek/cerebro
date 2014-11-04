@@ -37,6 +37,7 @@ public class PushReceiver extends ParsePushBroadcastReceiver {
 		String msg = message.getClass().getSimpleName() + ":" + rawJson;
 		Logger logger = new Logger(ctx);
 		logger.log("push: " + msg);
+		logger.close();
 		message.onReceive(ctx);
 	}
 }
