@@ -40,16 +40,19 @@ actions = {
     },
     "Aktywuj": function() {
         var setup = window.prompt("[Co ile minut],[Przez ile minut]", '3,30');
-        if(setup !== null) {
+        if (setup !== null) {
             var regex = /([0-9]+),([0-9]+)/;
             var parsed = regex.exec(setup);
-            if(!parsed) {
+            if (!parsed) {
                 window.alert('Niepopranie wpisany setup. Spróbuj "3,30"');
             }
             var interval = parseInt(parsed[1]);
             var timespan = parseInt(parsed[2]);
-            Meteor.call('activate', this._id, interval, timespan, function(error, result){
-                alert("Aktywacja "+name+": "+JSON.stringify(error || result));
+            var id = this._id;
+            Meteor.call('activate', id, interval, timespan, function(error, result) {
+                Probes.update(id, {
+                    $set: {"activation.result": error || result}
+                });                
             });
         }
     }
