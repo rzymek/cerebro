@@ -57,6 +57,7 @@ WebApp.connectHandlers
     try {
         var data = req.body;
         var name = req.query.name;
+        console.log(name, data);
         check(name, String);
         check(data, {
             deviceId: String,
