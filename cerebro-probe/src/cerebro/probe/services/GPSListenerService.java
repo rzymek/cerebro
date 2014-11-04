@@ -82,7 +82,7 @@ public class GPSListenerService extends Service {
 					reportLocation(location);
 					int secondsTillNextReport = lastReport == null 
 							? request.checkIntervalSec 
-							: new Period(lastReport.plusSeconds(request.checkIntervalSec), new DateTime()).getSeconds();
+							: new Period(new DateTime(), lastReport.plusSeconds(request.checkIntervalSec)).getSeconds();
 					logger.log("secondsTillNextReport:"+secondsTillNextReport);
 					if (secondsTillNextReport > GPS_AVERAGE_AQUIRE_SEC) {
 						stopGps();
