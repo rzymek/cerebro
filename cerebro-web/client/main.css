@@ -5,7 +5,9 @@ body {
 html, body, #map {
     height: 100%;
 }
-
+th {
+    padding-right:5px;
+}
 .controls {
     position: absolute;
     right: 0;

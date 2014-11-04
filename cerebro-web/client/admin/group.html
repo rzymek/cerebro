@@ -1,0 +1,68 @@
+<template name="group">
+    <div class="row">
+        <div class="col-md-3">
+            <select multiple class="form-control groupProbes" size="30">
+                <optgroup label="sms">
+                    {{#each smsProbes}}
+                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                    {{/each}}
+                </optgroup>
+                <optgroup label="push">
+                    {{#each pushProbes}}
+                    <option value="{{_id}}" style="background-color: {{color}}">{{name}} {{number}}</option>
+                    {{/each}}
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-md-9">
+            <h3>Wybrano: {{get 'admin_group_selected'}}</h3>
+            <h3>Ogólne</h3>
+            <form role="form" class="form-inline groupActivate">
+                0 = wyłącz, -1=one time<br>
+                <div class="form-group">
+                    <label class="sr-only" for="interval">Co ile? (min)</label>
+                    <input type="number" class="form-control" id="interval" name="interval" placeholder="Co ile? (min)">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="timespan">Jak długo? (min)</label>
+                    <input type="number" class="form-control" id="timespan" name="timespan" placeholder="Jak długo? (min)">
+                </div>
+                <button type="submit" class="btn btn-primary">Aktywuj</button>
+            </form>     
+            <h3>SMS</h3>
+            <!--
+            <form role="form" class="form-inline groupPassword">
+                <div class="form-group">
+                    <label class="sr-only" for="password">Hasło</label>
+                    <input type="text" class="form-control" id="password" placeholder="Hasło">
+                </div>
+                <button type="submit" class="btn btn-primary">Ustaw hasło</button>
+            </form>                 
+            <br>
+            -->
+            <button type="submit" class="btn btn-warning groupReset">Reset ustawień</button>
+            <h3>Push</h3>
+            <form role="form" class="form-inline groupConfig">
+                <div class="form-group">
+                    <label class="sr-only" for="server">Adres serwera</label>
+                    <input type="url" class="form-control" id="server" name="server" placeholder="Adres serwera">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="channel">Kanał komunikacji</label>
+                    <input type="text" class="form-control" id="channel" name="channel" placeholder="Kanał komunikacji">
+                </div>
+                <button type="submit" class="btn btn-primary">Wyślij</button>
+            </form>     
+            <h3>Wyniki</h3>
+            <table>
+                {{#each get 'admin_selected'}}
+                <tr>
+                    {{#with status .}}
+                    <th>{{probe.name}}</th><td>{{json result}}</td>
+                    {{/with}}
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</template>

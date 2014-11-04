@@ -47,10 +47,7 @@ Template.settings.rendered = function() {
 Template.settings.events({
     'submit form': function(e, t) {
         e.preventDefault();
-        var settings = $(e.target).serializeArray().reduce(function(a, b) {
-            a[b.name] = b.value;
-            return a;
-        }, {});
+        var settings = getFormValues(e.target);
         Meteor.users.update(Meteor.userId(), {
             $set: {settings: settings}
         });

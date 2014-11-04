@@ -23,6 +23,29 @@ var sendSMS = function(probeId, text) {
 
 Meteor.methods({
     sendSMS: sendSMS,
+    config: function(probeId, server, channel) {        
+        console.log(arguments);
+        check(Meteor.userId(), Match.Where(isAdmin));
+        check(probeId, String);
+        check(server, Match.OneOf(null, String));
+        check(channel, Match.OneOf(null, String));
+
+        var result = HTTP.post('https://api.parse.com/1/push', {
+            headers: {
+                "X-Parse-Application-Id": Meteor.settings.parse.appId,
+                "X-Parse-REST-API-Key": Meteor.settings.parse.restKey
+            },
+            data: {
+                channels: ["id" + probeId],
+                data: {
+                    type: "ConfigMsg",
+                    server: server,
+                    channel: channel
+                }
+            }
+        });
+        return result.content;
+    },
     activate: function(probeId, interval, timespan) {
         check(Meteor.userId(), Match.Where(isAdmin));
         check(probeId, String);

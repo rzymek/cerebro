@@ -1,5 +1,5 @@
 Router.route('/', function() {
-    this.render('map');    
+    this.render('map');
 });
 
 Router.route('/adm', function() {
@@ -9,6 +9,10 @@ Router.route('/adm', function() {
 Router.route('/adm/log', function() {
     this.layout('adminLayout');
     this.render('log');
+});
+Router.route('/adm/group', function() {
+    this.layout('adminLayout');
+    this.render('group');
 });
 Router.route('/adm/list', function() {
     this.layout('adminLayout');
