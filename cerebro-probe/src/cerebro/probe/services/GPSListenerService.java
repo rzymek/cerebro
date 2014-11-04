@@ -24,7 +24,6 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import cerebro.lib.AbstractLocationListener;
-import cerebro.lib.SateliteListener;
 import cerebro.lib.Utils;
 import cerebro.lib.rest.CerebroService;
 import cerebro.lib.rest.Report;
@@ -51,8 +50,6 @@ public class GPSListenerService extends Service {
 	protected static final int GPS_AVERAGE_AQUIRE_SEC = 120;
 
 	private LocationManager gps;
-
-	private SateliteListener sateliteListener;
 
 	protected Logger logger;
 
@@ -85,13 +82,14 @@ public class GPSListenerService extends Service {
 					reportLocation(location);
 					int secondsTillNextReport = lastReport == null 
 							? request.checkIntervalSec 
-							: new Period(lastReport.plusSeconds(request.checkIntervalSec), new DateTime()).getSeconds();//TODO
+							: new Period(lastReport.plusSeconds(request.checkIntervalSec), new DateTime()).getSeconds();
+					logger.log("secondsTillNextReport:"+secondsTillNextReport);
 					if (secondsTillNextReport > GPS_AVERAGE_AQUIRE_SEC) {
-						cancelGps();
+						stopGps();
 						scheduled = scheduler.schedule(new Runnable() {						
 							@Override
 							public void run() {
-								gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
+								startGPS();
 							}
 						}, secondsTillNextReport, TimeUnit.SECONDS);
 					}
@@ -113,22 +111,7 @@ public class GPSListenerService extends Service {
 		Thread.setDefaultUncaughtExceptionHandler((App) getApplication());
 		logger = ((App) getApplication()).logger;
 		gps = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		gps.addGpsStatusListener(sateliteListener);
-
-		sateliteListener = new SateliteListener(gps) {
-			@Override
-			protected void onSatelitesChanged(int used, int max) {
-				logger.log("sat: " + used + "/" + max);
-			}
-		};
 		logger.log("listener created\n" + Utils.getSystemInfo());
-	}
-
-	protected void cancelGps() {
-		if(scheduled != null) {
-			scheduled.cancel(false);
-		}
-		gps.removeUpdates(gpsListener);
 	}
 
 	protected void reportLocation(final Location location) {
@@ -171,9 +154,9 @@ public class GPSListenerService extends Service {
 			started = new DateTime();
 			lastReport = null;
 			logger.log("GPS service: " + request);
-			cancelGps();
+			stopGps();
 			if (request.gpsOnMinutes != 0) {
-				gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
+				startGPS();
 			}
 		}
 		startForeground(NOTIFIFACTION_ID, createNotification());
@@ -217,12 +200,20 @@ public class GPSListenerService extends Service {
 
 	protected void stopGps() {
 		logger.log("GPS: stop");
+		if(scheduled != null) {
+			scheduled.cancel(false);
+		}
 		gps.removeUpdates(gpsListener);
-		gps.removeGpsStatusListener(sateliteListener);
+		
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return (null);
+	}
+
+	private void startGPS() {
+		logger.log("GPS ON");
+		gps.requestLocationUpdates(GPS_PROVIDER, request.checkIntervalSec, GPS_MIN_DISTANCE, gpsListener);
 	}
 }
