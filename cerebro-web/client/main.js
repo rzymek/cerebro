@@ -19,6 +19,9 @@ getProbes = function() {
         }
     });
 };
+Template.registerHelper('date', function(date){    
+    return date ? moment(date).format('HH:mm (DD.MM.YYYY)') : date;
+});
 
 Template.registerHelper('probes', getProbes);
 Template.registerHelper('equals', function(a, b) {
