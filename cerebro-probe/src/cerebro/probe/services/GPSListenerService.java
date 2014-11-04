@@ -206,7 +206,7 @@ public class GPSListenerService extends Service {
 		builder.setContentIntent(resultPendingIntent);
 		builder.setSmallIcon(R.drawable.ic_launcher);
 		builder.setContentTitle(getString(R.string.app_name));
-		builder.setContentText(Utils.getDeviceId(this));
+		builder.setContentText(Utils.getUsername(this));
 
 		Notification notification = builder.build();
 		notification.flags |= Notification.FLAG_NO_CLEAR;
