@@ -23,9 +23,6 @@ active = function(act) {
         return false;
     }
 };
-activeColor = function(act){
-    
-}
 
 Template.activation.helpers({
     message: function() {
