@@ -30,7 +30,7 @@ Meteor.methods({
         check(timespan, Match.Integer);
         var probe = Probes.findOne(probeId);
         var result;
-        if (probe.type === 'cerebro.probe') {
+        if (probe.type.match(/^cerebro.probe/)) {
             result = HTTP.post('https://api.parse.com/1/push', {
                 headers: {
                     "X-Parse-Application-Id": Meteor.settings.parse.appId,
