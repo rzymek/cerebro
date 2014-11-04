@@ -155,9 +155,10 @@ public class GPSListenerService extends Service {
 			lastReport = null;
 			logger.log("GPS service: " + request);
 			stopGps();
-			if (request.gpsOnMinutes != 0) {
-				startGPS();
+			if (request.gpsOnMinutes == 0 && request.checkIntervalSec == 0) {
+				return START_NOT_STICKY;
 			}
+			startGPS();
 		}
 		startForeground(NOTIFIFACTION_ID, createNotification());
 		return START_NOT_STICKY;
