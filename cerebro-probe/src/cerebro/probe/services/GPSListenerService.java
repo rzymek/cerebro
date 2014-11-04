@@ -23,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.telephony.TelephonyManager;
 import cerebro.lib.AbstractLocationListener;
 import cerebro.lib.SateliteListener;
 import cerebro.lib.Utils;
@@ -154,7 +153,7 @@ public class GPSListenerService extends Service {
 				report.type = getApplicationInfo().packageName;
 				report.location.lat = location.getLatitude();
 				report.location.lon = location.getLongitude();
-				report.number = getPhoneNumber();
+				report.number = Utils.getPhoneNumber(ctx);
 				report.speed = location.getSpeed();
 				report.accuracy = location.getAccuracy();
 				report.timestamp_gps = new Date(location.getTime());
@@ -162,11 +161,6 @@ public class GPSListenerService extends Service {
 			}
 		}.execute();
 
-	}
-
-	protected String getPhoneNumber() {
-		TelephonyManager telephony = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-		return telephony.getLine1Number();
 	}
 
 	@Override
