@@ -8,6 +8,8 @@ function createIcon(probe) {
     };
 }
 
+markers = {};
+
 Template.map.rendered = function() {
     map = new L.Map('map', {
         center: [52.22, 21.0],
@@ -36,17 +38,21 @@ Template.map.rendered = function() {
         }, div);
         return div;
     }
-    markers = {};
     getProbes().observeChanges({
         added: function(id, probe) {
+            if(probe.location === undefined)
+                return;
             var marker = L.circleMarker(probe.location, createIcon(probe));
             marker.setRadius(7/*m*/);
             marker.addTo(map);
             marker.bindPopup(createPopup(id));
             markers[id] = marker;
+            Session.set('markers_timestamp', moment().unix());
         },
         changed: function(id, probe) {
             var marker = markers[id];
+            if(marker === undefined)
+                return;
             if (probe.location)
                 marker.setLatLng(probe.location);
             if (probe.color)
@@ -54,19 +60,25 @@ Template.map.rendered = function() {
         },
         removed: function(id) {
             var marker = markers[id];
+            if(marker === undefined)
+                return;
             map.removeLayer(marker);
             if (track)
                 map.removeLayer(track);
             delete markers[id];
+            Session.set('markers_timestamp', moment().unix());
         }
     });
 };
 
 Meteor.setInterval(function() {
     Session.set('minutes', moment().minutes());
-    if (!markers) {
-        return;
-    }
+}, 60 * 1000);
+
+Tracker.autorun(function(){
+    console.log('refresh markers:',markers);
+    Session.get('minutes');
+    Session.get('markers_timestamp');
     _.pairs(markers).map(function(it) {
         return {
             id: it[0],
@@ -74,8 +86,11 @@ Meteor.setInterval(function() {
         };
     }).forEach(function(entry) {
         var icon = createIcon(Probes.findOne(entry.id, {
-            reactive: false
+            fields: {
+                color:1,
+                activation:1
+            }
         }));
         entry.marker.setStyle(icon);
     });
-}, 60 * 1000);
+});

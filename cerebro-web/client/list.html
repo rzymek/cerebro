@@ -3,7 +3,8 @@
         {{> loginButtons align="right"}} <br>
 
         {{#each probes}}
-        <button name="{{_id}}" type="button" style="background-color: {{color}}" class="btn btn-default probe-btn">{{name}}</button><br>
+        <button name="{{_id}}" type="button" style="background-color: {{color}}" 
+                class="btn btn-default btn-sm probe-btn {{class}}">{{name}}</button><br>
         {{/each}}
     </div>
 </template>

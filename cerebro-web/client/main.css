@@ -16,6 +16,7 @@ html, body, #map {
 }
 .probe-btn {
     width: 100%;
+    border-width: 2px;
 }
 
 .activeProbes {
@@ -33,4 +34,10 @@ html, body, #map {
 }
 .inactive {
     color: lightgray;
+}
+.active-btn {
+    border-color: green;
+}
+.inactive-btn {
+    border-color: lightgray;
 }

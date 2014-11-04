@@ -10,10 +10,14 @@ Meteor.startup(function() {
     Meteor.subscribe("settings");
 });
 
-getProbes = function(opt) {
+getProbes = function() {
     return Probes.find({
         blocked: {$ne: true}
-    }, opt);
+    }, {
+        sort: {
+            name: 1
+        }
+    });
 };
 
 Template.registerHelper('probes', getProbes);
