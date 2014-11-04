@@ -6,6 +6,8 @@ Template.list.helpers({
 Template.list.events({
     'click button.probe-btn': function(e) {
         var marker = markers[e.target.name];
+        if(!marker)
+            return;
         marker.togglePopup ? marker.togglePopup() : marker.openPopup();
     }
 });
