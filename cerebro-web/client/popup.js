@@ -16,6 +16,7 @@ Template.probeSMS.events({
 });
 
 active = function(act) {
+    Session.get('minutes'); //refresh every minute
     if (act && act.when) {
         var until = moment(act.when).add(act.timespan, 'minutes');
         return until.isAfter(/*now*/);
