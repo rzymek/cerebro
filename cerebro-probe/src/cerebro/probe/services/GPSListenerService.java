@@ -43,21 +43,13 @@ public class GPSListenerService extends Service {
 
 	private Activate request;
 	private DateTime started = new DateTime(0);
-	private DateTime lastReport = null;
 
 	private LocationListener gpsListener = new AbstractLocationListener() {
-		private boolean lastReportSufficientlyAccurate;
 
 		@Override
 		public void onLocationChanged(Location location) {
-			boolean sufficientlyAccurate = location.getAccuracy() <= MIN_ACCURACY;
-			boolean timeForNewReport = lastReport == null || lastReport.plusSeconds(request.checkIntervalSec).isBeforeNow();
-			if (timeForNewReport || !lastReportSufficientlyAccurate) {
-				reportLocation(location);
-				lastReportSufficientlyAccurate = sufficientlyAccurate;
-			}			
-			logger.put(location);
-			if (sufficientlyAccurate && started.plusMinutes(request.gpsOnMinutes).isBeforeNow()) {
+			reportLocation(location);
+			if (started.plusMinutes(request.gpsOnMinutes).isBeforeNow()) {
 				stopGps();
 			}
 		}
@@ -74,7 +66,6 @@ public class GPSListenerService extends Service {
 
 	protected void reportLocation(final Location location) {
 		logger.log("reporting location: acc:" + location.getAccuracy());
-		lastReport = new DateTime();
 
 		ParseObject report = new ParseObject("locrep");
 		report.put("lat", location.getLatitude());
@@ -110,7 +101,6 @@ public class GPSListenerService extends Service {
 		request = intent.getParcelableExtra(EXTRA_REQUEST);
 		if (request != null) {
 			started = new DateTime();
-			lastReport = null;
 			logger.log("GPS service: " + request);
 			if (request.gpsOnMinutes == 0 && request.checkIntervalSec == 0) {
 				return START_NOT_STICKY;
