@@ -49,10 +49,13 @@ actions = {
             var interval = parseInt(parsed[1]);
             var timespan = parseInt(parsed[2]);
             var id = this._id;
+            Probes.update(id, {
+                $set: {"activation.result": "..."}
+            });
             Meteor.call('activate', id, interval, timespan, function(error, result) {
                 Probes.update(id, {
                     $set: {"activation.result": error || result}
-                });                
+                });
             });
         }
     }
