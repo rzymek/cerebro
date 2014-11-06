@@ -79,19 +79,15 @@ public class GPSListenerService extends Service {
 				//		+ (sufficientlyAccurate ? "sufficientlyAccurate " : "#") + (moreAccurate ? "moreAccurate " : "#")
 				//		+ (timeForNewReport ? "timeForNewReport " : "#") + "");
 				if (timeForNewReport || (lastReportNotSufficientlyAccurate && sufficientlyAccurate && moreAccurate)) {
-					int secondsTillNextReport = lastReport == null 
-							? request.checkIntervalSec 
-							: new Period(lastReport.plusSeconds(request.checkIntervalSec), new DateTime()).getSeconds();
-					logger.log("secondsTillNextReport:"+secondsTillNextReport);
 					reportLocation(location);
-					if (secondsTillNextReport > GPS_AVERAGE_AQUIRE_SEC) {
+					if (request.checkIntervalSec > GPS_AVERAGE_AQUIRE_SEC) {
 						stopGps();
 						scheduled = scheduler.schedule(new Runnable() {						
 							@Override
 							public void run() {
 								startGPS();
 							}
-						}, secondsTillNextReport, TimeUnit.SECONDS);
+						}, request.checkIntervalSec, TimeUnit.SECONDS);
 					}
 				}
 				lastReportLocation = location;
