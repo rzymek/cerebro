@@ -1,7 +1,7 @@
 /*
- 
- curl -w'\n' localhost:3000/report -H "Content-Type: application/json" -d '{"location":{"lat":0,"lon":0},"deviceId":"test","type":"cerebro.probe" }'
- 
+
+curl -w'\n' localhost:3000/report -H "Content-Type: application/json" -d '{"location":{"lat":0,"lon":0},"deviceId":"test","type":"cerebro.probe" }'
+
  */
 var blockByDefault = function() {
     var admin = Meteor.users.findOne({"emails.address": 'rzymek@gmail.com'});

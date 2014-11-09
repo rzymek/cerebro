@@ -1,11 +1,10 @@
 function createIcon(probe) {
-    return {
-        fillOpacity: 0.7,
-        opacity: 1,
-        fillColor: probe.color,
-        color: active(probe.activation) ? '#0a0' : '#333',
-        weight: 2
-    };
+    var name = probe.name || '';
+    return  L.icon({
+        iconUrl: '/icon.svg?color=' + encodeURIComponent(probe.color || 'blue') + "&border=black&text=" + encodeURIComponent(name.substr(0, 2).trim()),
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+    });
 }
 
 markers = {};
@@ -40,10 +39,12 @@ Template.map.rendered = function() {
     }
     getProbes().observeChanges({
         added: function(id, probe) {
-            if(probe.location === undefined)
+            if (probe.location === undefined)
                 return;
-            var marker = L.circleMarker(probe.location, createIcon(probe));
-            marker.setRadius(7/*m*/);
+            var marker = L.marker(probe.location, {
+                icon: createIcon(probe)
+            });
+//            marker.setRadius(7/*m*/);
             marker.addTo(map);
             marker.bindPopup(createPopup(id));
             markers[id] = marker;
@@ -51,16 +52,16 @@ Template.map.rendered = function() {
         },
         changed: function(id, probe) {
             var marker = markers[id];
-            if(marker === undefined)
+            if (marker === undefined)
                 return;
             if (probe.location)
                 marker.setLatLng(probe.location);
-            if (probe.color)
-                marker.setStyle(createIcon(probe));
+            if (probe.color || probe.name)
+                marker.setIcon(createIcon(probe));
         },
         removed: function(id) {
             var marker = markers[id];
-            if(marker === undefined)
+            if (marker === undefined)
                 return;
             map.removeLayer(marker);
             if (track)
@@ -75,8 +76,8 @@ Meteor.setInterval(function() {
     Session.set('minutes', moment().minutes());
 }, 60 * 1000);
 
-Tracker.autorun(function(){
-    console.log('refresh markers:',markers);
+Tracker.autorun(function() {
+    console.log('refresh markers:', markers);
     Session.get('minutes');
     Session.get('markers_timestamp');
     _.pairs(markers).map(function(it) {
@@ -87,10 +88,11 @@ Tracker.autorun(function(){
     }).forEach(function(entry) {
         var icon = createIcon(Probes.findOne(entry.id, {
             fields: {
-                color:1,
-                activation:1
+                color: 1,
+                activation: 1,
+                name: 1
             }
         }));
-        entry.marker.setStyle(icon);
+        entry.marker.setIcon(icon);
     });
 });
