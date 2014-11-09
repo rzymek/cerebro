@@ -1,5 +1,6 @@
 function createIcon(probe) {
     var name = probe.name || '';
+    var color = (probe.color||'blue').replace(/^#/,'')
     return  L.icon({
         iconUrl: '/icon.svg?color=' + encodeURIComponent(probe.color || 'blue') + "&border=black&text=" + encodeURIComponent(name.substr(0, 2).trim()),
         iconSize: [32, 32],
