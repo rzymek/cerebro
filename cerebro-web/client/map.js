@@ -1,8 +1,8 @@
 function createIcon(probe) {
     var name = probe.name || '';
-    var color = (probe.color||'blue').replace(/^#/,'')
+    var color = (probe.color || 'blue')
     return  L.icon({
-        iconUrl: '/icon.svg?color=' + encodeURIComponent(probe.color || 'blue') + "&border=black&text=" + encodeURIComponent(name.substr(0, 2).trim()),
+        iconUrl: '/icon.svg?color=' + encodeURIComponent(color) + "&border=black&text=" + encodeURIComponent(name.substr(0, 2).trim()),
         iconSize: [32, 32],
         iconAnchor: [16, 16]
     });
@@ -38,10 +38,11 @@ Template.map.rendered = function() {
         }, div);
         return div;
     }
-    getProbes().observeChanges({
-        added: function(id, probe) {
+    getProbes().observe({
+        added: function(probe) {
             if (probe.location === undefined)
                 return;
+            var id=probe._id;
             var marker = L.marker(probe.location, {
                 icon: createIcon(probe)
             });
@@ -51,16 +52,16 @@ Template.map.rendered = function() {
             markers[id] = marker;
             Session.set('markers_timestamp', moment().unix());
         },
-        changed: function(id, probe) {
+        changed: function(probe) {
+            var id=probe._id;
             var marker = markers[id];
             if (marker === undefined)
                 return;
-            if (probe.location)
-                marker.setLatLng(probe.location);
-            if (probe.color || probe.name)
-                marker.setIcon(createIcon(probe));
+            marker.setLatLng(probe.location);
+            marker.setIcon(createIcon(probe));
         },
-        removed: function(id) {
+        removed: function(probe) {
+            var id=probe._id;
             var marker = markers[id];
             if (marker === undefined)
                 return;
@@ -77,23 +78,25 @@ Meteor.setInterval(function() {
     Session.set('minutes', moment().minutes());
 }, 60 * 1000);
 
-Tracker.autorun(function() {
-    console.log('refresh markers:', markers);
-    Session.get('minutes');
-    Session.get('markers_timestamp');
-    _.pairs(markers).map(function(it) {
-        return {
-            id: it[0],
-            marker: it[1]
-        };
-    }).forEach(function(entry) {
-        var icon = createIcon(Probes.findOne(entry.id, {
-            fields: {
-                color: 1,
-                activation: 1,
-                name: 1
-            }
-        }));
-        entry.marker.setIcon(icon);
-    });
-});
+/*
+ Tracker.autorun(function() {
+ console.log('refresh markers:', markers);
+ Session.get('minutes');
+ Session.get('markers_timestamp');
+ _.pairs(markers).map(function(it) {
+ return {
+ id: it[0],
+ marker: it[1]
+ };
+ }).forEach(function(entry) {
+ var icon = createIcon(Probes.findOne(entry.id, {
+ fields: {
+ color: 1,
+ activation: 1,
+ name: 1
+ }
+ }));
+ entry.marker.setIcon(icon);
+ });
+ });
+ */

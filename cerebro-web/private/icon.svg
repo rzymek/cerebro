@@ -16,7 +16,7 @@
             d="m 29.069009,15.819323 a 13.289837,13.289837 0 1 1 -26.5796739,0 13.289837,13.289837 0 1 1 26.5796739,0 z"
             transform="translate(0.22082806,1020.5429)"
             id="path2989"
-            style="opacity:0.48584906;fill:{{color}};fill-opacity:0.5;fill-rule:nonzero;stroke:{{border}};stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+            style="opacity:9;fill:{{color}};fill-opacity:0.7;fill-rule:nonzero;stroke:{{border}};stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
         <text
             x="16.05308"
             y="1043.5597"
